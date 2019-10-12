@@ -14,6 +14,13 @@ def addObject(object,type):
     elif type==2:
         enemyCharacterList.append(object)
 
+def update():
+    for obj in allyCharacterList:
+        obj.update()
+
+    for obj in enemyCharacterList:
+        obj.update()
+
 def deleteObject():
     #캐릭터 사망 추가시 구현예정.
     pass

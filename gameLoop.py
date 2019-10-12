@@ -3,6 +3,7 @@ import camera
 from pico2d import *
 from base import *
 import worldObjManager
+import allyCharacter
 
 def eventLoop():
     global running
@@ -19,8 +20,13 @@ running = True
 allyBase=base("base\\allyBase.png",150,150,True)
 enemyBase=base("base\\enemyBase.png",camera.backgroundImage.w-150,150,False)
 
+
+
+knight1=allyCharacter.knight1(300,100)
+
 worldObjManager.addObject(allyBase,0)
 worldObjManager.addObject(enemyBase,0)
+worldObjManager.addObject(knight1,1)
 
 while running:
     eventLoop()
@@ -30,6 +36,6 @@ while running:
     clear_canvas()
     camera.draw()
     worldObjManager.drawObject()
-    #allyBase.draw()
-    #enemyBase.draw()
+    worldObjManager.update()
+
     update_canvas()
