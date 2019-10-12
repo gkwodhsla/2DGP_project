@@ -23,6 +23,7 @@ enemyBase=base("base\\enemyBase.png",camera.backgroundImage.w-150,150,False)
 
 
 knight1=allyCharacter.knight1(300,100)
+knight2=allyCharacter.knight1(1200,100)
 
 worldObjManager.addObject(allyBase,0)
 worldObjManager.addObject(enemyBase,0)
@@ -36,6 +37,9 @@ while running:
     clear_canvas()
     camera.draw()
     worldObjManager.drawObject()
-    worldObjManager.update()
+    knight1.draw()
+    knight2.draw()
+    knight1.update()
+    knight1.checkCollision(knight2.x)
 
     update_canvas()
