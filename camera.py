@@ -1,3 +1,5 @@
+#최초에 이 파이썬 파일에서 캔버스를 엽니다.
+
 from pico2d import *
 import random
 
@@ -6,7 +8,7 @@ windowHEIGHT = 600
 
 open_canvas(windowWIDTH, windowHEIGHT)
 
-background = load_image("background\\" + str(random.randint(1, 5)) + ".png")
+backgroundImage = load_image("background\\" + str(random.randint(1, 4)) + ".png")
 
 x = 0
 y = 0
@@ -20,7 +22,7 @@ moveLeft = False
 
 def draw():
     global cameraXCoord
-    background.clip_draw_to_origin(x + cameraXCoord, 0, windowWIDTH, windowHEIGHT, 0, 0)
+    backgroundImage.clip_draw_to_origin(x + cameraXCoord, 0, windowWIDTH, windowHEIGHT, 0, 0)
 
 
 def handleEvent(mouseX):
@@ -36,7 +38,7 @@ def handleEvent(mouseX):
 
 def update():
     global cameraXCoord
-    if moveRight and cameraXCoord < background.w - windowWIDTH:
+    if moveRight and cameraXCoord < backgroundImage.w - windowWIDTH:
         cameraXCoord += 2
     elif moveLeft and cameraXCoord > 0:
         cameraXCoord -= 2
