@@ -15,11 +15,25 @@ def addObject(object,type):
         enemyCharacterList.append(object)
 
 def update():
-    for obj in allyCharacterList:
-        obj.update()
+    for i in range(0,len(allyCharacterList)):
+        allyCharacterList[i].update()
 
-    for obj in enemyCharacterList:
-        obj.update()
+    allyCharacterList[0].checkEnemyMeet(enemyCharacterList[0].x)
+
+    if(len(allyCharacterList)>0):
+        for i in range(1,len(allyCharacterList)):
+            allyCharacterList[i].checkCollision(allyCharacterList[i].x)
+
+
+    for i in range(0, len(enemyCharacterList)):
+        enemyCharacterList[i].update()
+
+    enemyCharacterList[0].checkEnemyMeet(allyCharacterList[0].x)
+
+    if (len(enemyCharacterList) > 0):
+        for i in range(1, len(enemyCharacterList)):
+            enemyCharacterList[i].checkCollision(enemyCharacterList[i].x)
+
 
 def deleteObject():
     #캐릭터 사망 추가시 구현예정.

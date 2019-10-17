@@ -4,11 +4,17 @@ numOfImage = 6
 knightWalkImageList = [[] for i in range(0, 3)]
 
 
+# 기사 걷는 이미지가 담긴 리스트.
+
 def loadKnightImage():
     for i in range(0, 6 + 1):
         knightWalkImageList[0].append(load_image("Ally\\Knight\\1_KNIGHT\\_WALK\\_WALK_00" + str(i) + ".png"))
 
+# 이미지 로드.
+
+
 loadKnightImage()
+
 
 class Knight1(CharacterABC):
     state = CharacterState.WALK
@@ -20,9 +26,11 @@ class Knight1(CharacterABC):
 
     def draw(self):
         if self.state == CharacterState.WALK:
-            knightWalkImageList[0][self.frame % numOfImage].draw(self.x - camera.cameraXCoord, self.y, self.size,self.size)
+            knightWalkImageList[0][self.frame % numOfImage].draw(self.x - camera.cameraXCoord, self.y, self.size,
+                                                                 self.size)
         elif self.state == CharacterState.IDLE:
-            knightWalkImageList[0][self.frame % numOfImage].draw(self.x - camera.cameraXCoord, self.y, self.size,self.size)
+            knightWalkImageList[0][self.frame % numOfImage].draw(self.x - camera.cameraXCoord, self.y, self.size,
+                                                                 self.size)
 
     def move(self):
         pass
@@ -35,6 +43,12 @@ class Knight1(CharacterABC):
     def checkCollision(self, frontCharacterXpos):
         if self.x + self.size > frontCharacterXpos:
             self.state = CharacterState.IDLE
+        else:
+            self.state=CharacterState.WALK
+
+    def checkEnemyMeet(self,enemyXpos):
+        if self.x + self.size > enemyXpos:
+            self.state=CharacterState.IDLE#일단 IDLE로 나중에 ATTACK으로 수정할것.
 
     def changeState(self):
         pass
