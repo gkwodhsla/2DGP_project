@@ -22,7 +22,7 @@ def update():
 
     if(len(allyCharacterList)>0):
         for i in range(1,len(allyCharacterList)):
-            allyCharacterList[i].checkCollision(allyCharacterList[i].x)
+            allyCharacterList[i].checkCollision(allyCharacterList[i-1].x)
 
 
     for i in range(0, len(enemyCharacterList)):
@@ -32,7 +32,7 @@ def update():
 
     if (len(enemyCharacterList) > 0):
         for i in range(1, len(enemyCharacterList)):
-            enemyCharacterList[i].checkCollision(enemyCharacterList[i].x)
+            enemyCharacterList[i].checkCollision(enemyCharacterList[i-1].x)
 
 
 def deleteObject():
