@@ -20,11 +20,9 @@ class Knight1(CharacterABC):
 
     def draw(self):
         if self.state == CharacterState.WALK:
-            knightWalkImageList[0][self.frame % numOfImage].draw(self.x - camera.cameraXCoord, self.y, self.size,
-                                                                 self.size)
+            knightWalkImageList[0][self.frame % numOfImage].draw(self.x - camera.cameraXCoord, self.y, self.size,self.size)
         elif self.state == CharacterState.IDLE:
-            knightWalkImageList[0][self.frame % numOfImage].draw(self.x - camera.cameraXCoord, self.y, self.size,
-                                                                 self.size)
+            knightWalkImageList[0][self.frame % numOfImage].draw(self.x - camera.cameraXCoord, self.y, self.size,self.size)
 
     def move(self):
         pass
