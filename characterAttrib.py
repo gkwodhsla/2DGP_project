@@ -3,13 +3,6 @@ from enum import Enum
 import camera
 from pico2d import *
 
-walkImageList = []
-
-
-def loadKnightImage():
-    for i in range(0, 6 + 1):
-        walkImageList.append(load_image("Ally\\Knight\\1_KNIGHT\\_WALK\\_WALK_00" + str(i) + ".png"))
-
 
 class CharacterState(Enum):
     IDLE = 0,
