@@ -24,6 +24,7 @@ enemyBase = base("base\\enemyBase.png", camera.backgroundImage.w - 150, 150, Fal
 
 knight1 = allyCharacter.Knight1(300, 100)
 knight2 = allyCharacter.Knight1(300, 100)
+version2Knight=allyCharacter.Knight3(300,100)
 
 ork1 = enemyCharacter.Ork1(1600, 100)
 ork2 = enemyCharacter.Ork1(1600,100)
@@ -32,6 +33,8 @@ worldObjManager.addObject(allyBase, 0)
 worldObjManager.addObject(enemyBase, 0)
 worldObjManager.addObject(knight1, 1)
 worldObjManager.addObject(knight2,1)
+worldObjManager.addObject(version2Knight,1)
+
 worldObjManager.addObject(ork1, 2)
 worldObjManager.addObject(ork2,2)
 while running:
