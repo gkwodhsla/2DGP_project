@@ -3,22 +3,26 @@ import worldObjManager
 
 numOfWalkImage = 6
 numOfAttackImage = 7
+numOfDieImage = 6
 knightWalkImageList = [[] for i in range(0, 3)]
 knightAttackImageList = [[] for i in range(0, 3)]
-
+knightDieImageList = [[] for i in range(0,3)]
 
 # 기사 걷는 이미지가 담긴 리스트.
 
 def loadKnightImage():
-    for i in range(0, 6 + 1):
+    for i in range(0, numOfWalkImage + 1):
         knightWalkImageList[0].append(load_image("Ally\\Knight\\1_KNIGHT\\_WALK\\_WALK_00" + str(i) + ".png"))
         # knightWalkImageList[1].append(load_image("Ally\\Knight\\2_KNIGHT\\_WALK\\_WALK_00" + str(i) + ".png"))
         # knightWalkImageList[2].append(load_image("Ally\\Knight\\3_KNIGHT\\_WALK\\_WALK_00" + str(i) + ".png"))
-    for i in range(0, 7 + 1):
+    for i in range(0, numOfAttackImage + 1):
         knightAttackImageList[0].append(load_image("Ally\\Knight\\1_KNIGHT\\_ATTACK\\ATTACK_00" + str(i) + ".png"))
         # knightAttackImageList[1].append(load_image("Ally\\Knight\\2_KNIGHT\\_ATTACK\\ATTACK_00" + str(i) + ".png"))
         # knightAttackImageList[2].append(load_image("Ally\\Knight\\3_KNIGHT\\_ATTACK\\ATTACK_00" + str(i) + ".png"))
-
+    for i in range(0, numOfDieImage + 1):
+        knightDieImageList[0].append(load_image("Ally\\Knight\\1_KNIGHT\\_DIE\\_DIE_00" + str(i) + ".png"))
+        #knightDieImageList[1].append(load_image("Ally\\Knight\\2_KNIGHT\\_DIE\\_DIE_00" + str(i) + ".png"))
+        #knightDieImageList[2].append(load_image("Ally\\Knight\\2_KNIGHT\\_DIE\\_DIE_00" + str(i) + ".png"))
 
 # 이미지 로드.
 
@@ -43,6 +47,9 @@ class Knight1(CharacterABC):
         elif self.state == CharacterState.ATTACK:
             knightAttackImageList[0][self.frame % numOfAttackImage].draw(self.x - camera.cameraXCoord, self.y, self.size,
                                                                          self.size)
+        elif self.state == CharacterState.DIE:
+            knightDieImageList[0][self.frame & numOfDieImage].draw(self.x - camera.cameraXCoord, self.y, self.size,
+                                                                   self.size)
 
     def move(self):
         pass
@@ -50,12 +57,20 @@ class Knight1(CharacterABC):
     def update(self):
         if self.state == CharacterState.WALK:
             self.frame += 1
-            self.x += 0.1
+            self.x += 1
 
         elif self.state == CharacterState.ATTACK:
             self.frame += 1
             if self.frame % 4 == 0:
                 worldObjManager.enemyCharacterList[0].hp -= self.offensePower
+                if worldObjManager.enemyCharacterList[0].hp <= 0:
+                    worldObjManager.enemyCharacterList[0].state = CharacterState.DIE
+                    worldObjManager.enemyCharacterList[0].frame = 0
+
+        elif self.state == CharacterState.DIE:
+            self.frame+=1
+            if self.frame == numOfDieImage:
+                worldObjManager.deleteObject(1)
 
     def checkCollision(self, frontCharacterXpos):
         if self.x + self.size > frontCharacterXpos:
