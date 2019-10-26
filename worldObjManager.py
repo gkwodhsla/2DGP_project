@@ -18,7 +18,8 @@ def update():
     for i in range(0,len(allyCharacterList)):
         allyCharacterList[i].update()
 
-    allyCharacterList[0].checkEnemyMeet(enemyCharacterList[0].x)
+    if(len(allyCharacterList)>0 and len(enemyCharacterList)>0):
+        allyCharacterList[0].checkEnemyMeet(enemyCharacterList[0].x)
 
     if(len(allyCharacterList)>0):
         for i in range(1,len(allyCharacterList)):
@@ -28,7 +29,9 @@ def update():
     for i in range(0, len(enemyCharacterList)):
         enemyCharacterList[i].update()
 
-    enemyCharacterList[0].checkEnemyMeet(allyCharacterList[0].x)
+    if(len(allyCharacterList)>0 and len(enemyCharacterList)>0):
+        enemyCharacterList[0].checkEnemyMeet(allyCharacterList[0].x)
+
 
     if (len(enemyCharacterList) > 0):
         for i in range(1, len(enemyCharacterList)):

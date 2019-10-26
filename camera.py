@@ -6,9 +6,8 @@ import random
 windowWIDTH = 800
 windowHEIGHT = 600
 
-open_canvas(windowWIDTH, windowHEIGHT)
 
-backgroundImage = load_image("background\\" + str(random.randint(1, 4)) + ".png")
+backgroundImage = None
 
 x = 0
 y = 0
@@ -19,6 +18,9 @@ moveRight = False
 
 moveLeft = False
 
+def enter():
+    global backgroundImage
+    backgroundImage = load_image("background\\" + str(random.randint(1, 4)) + ".png")
 
 def draw():
     global cameraXCoord
@@ -42,3 +44,7 @@ def update():
         cameraXCoord += 2
     elif moveLeft and cameraXCoord > 0:
         cameraXCoord -= 2
+
+def exit():
+    global backgroundImage
+    del(backgroundImage)
