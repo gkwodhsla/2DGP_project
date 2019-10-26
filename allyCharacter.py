@@ -35,7 +35,7 @@ class Knight1(CharacterABC):
         self.y = y
         self.frame = 0
         self.hp = 100
-        self.offensePower = 1
+        self.offensePower = 10
 
     def draw(self):
         if self.state == CharacterState.WALK:
@@ -73,8 +73,8 @@ class Knight1(CharacterABC):
             if self.frame == numOfDieImage:
                 if (len(worldObjManager.allyDeathList) > 0):
                     worldObjManager.deleteObject(1,self)
-                    if (len(worldObjManager.allyCharacterList) > 0):
-                        worldObjManager.allyCharacterList[0].state = CharacterState.WALK
+                if (len(worldObjManager.allyCharacterList) > 0):
+                    worldObjManager.allyCharacterList[0].state = CharacterState.WALK
         if self.hp<=0:
             return True
 

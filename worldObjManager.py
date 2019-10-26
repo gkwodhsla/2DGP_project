@@ -56,7 +56,7 @@ def update():
             allyDeathList[i].update()
 
     if (len(enemyDeathList) > 0):
-        for i in range(0, len(allyDeathList)):
+        for i in range(0, len(enemyDeathList)):
             enemyDeathList[i].update()
 
 
@@ -86,7 +86,7 @@ def drawObject():
         for i in range(0, len(allyDeathList)):
             allyDeathList[i].draw()
     if (len(enemyDeathList) > 0):
-        for i in range(0, len(allyDeathList)):
+        for i in range(0, len(enemyDeathList)):
             enemyDeathList[i].draw()
 
 

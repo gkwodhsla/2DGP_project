@@ -32,7 +32,7 @@ class Ork1(CharacterABC):
         self.y = y
         self.frame = 0
         self.hp = 100
-        self.offensePower = 30
+        self.offensePower = 2
 
     def draw(self):
         if self.state == CharacterState.WALK:
@@ -73,10 +73,9 @@ class Ork1(CharacterABC):
             self.frame += 1
             if self.frame == numOfDieImage:
                 if (len(worldObjManager.enemyDeathList) > 0):
-                    worldObjManager.deleteObject(2,self)
-                    if(len(worldObjManager.enemyCharacterList) > 0):
-                        worldObjManager.enemyCharacterList[0].state = CharacterState.WALK
-
+                    worldObjManager.deleteObject(2, self)
+                if (len(worldObjManager.enemyCharacterList) > 0):
+                    worldObjManager.enemyCharacterList[0].state = CharacterState.WALK
         if self.hp <= 0:
             return True
 
