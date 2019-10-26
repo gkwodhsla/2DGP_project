@@ -6,7 +6,8 @@ numOfAttackImage = 6
 numOfDieImage = 6
 orkWalkImageList = [[] for i in range(0, 3)]
 orkAttackImageList = [[] for i in range(0, 3)]
-orkDieImageList = [[] for i in range(0,3)]
+orkDieImageList = [[] for i in range(0, 3)]
+
 
 def loadOrkImage():
     for i in range(0, numOfWalkImage + 1):
@@ -17,10 +18,11 @@ def loadOrkImage():
         orkAttackImageList[0].append(load_image("Enemy\\Orks\\1_ORK\\ATTAK\\ATTAK_00" + str(i) + ".png"))
         # orkWalkImageList[1].append(load_image("Enemy\\Orks\\2_ORK\\ATTAK\\ATTAK_00" + str(i) + ".png"))
         # orkWalkImageList[2].append(load_image("Enemy\\Orks\\3_ORK\\ATTAK\\ATTAK_00" + str(i) + ".png""))
-    for i in range(0,numOfDieImage + 1):
-        orkAttackImageList[0].append(load_image("Enemy\\Orks\\1_ORK\\DIE\\DIE_00" + str(i) + ".png"))
+    for i in range(0, numOfDieImage + 1):
+        orkDieImageList[0].append(load_image("Enemy\\Orks\\1_ORK\\DIE\\DIE_00" + str(i) + ".png"))
         # orkWalkImageList[1].append(load_image("Enemy\\Orks\\2_ORK\\DIE\\DIE_00" + str(i) + ".png"))
         # orkWalkImageList[2].append(load_image("Enemy\\Orks\\3_ORK\\DIE\\DIE_00" + str(i) + ".png""))
+
 
 class Ork1(CharacterABC):
     state = CharacterState.WALK
@@ -30,22 +32,25 @@ class Ork1(CharacterABC):
         self.y = y
         self.frame = 0
         self.hp = 100
-        self.offensePower = 20
+        self.offensePower = 30
 
     def draw(self):
         if self.state == CharacterState.WALK:
-            orkWalkImageList[0][self.frame % numOfWalkImage].composite_draw(0, 'h', self.x - camera.cameraXCoord, self.y,
-                                                                        self.size, self.size)
+            orkWalkImageList[0][self.frame % numOfWalkImage].composite_draw(0, 'h', self.x - camera.cameraXCoord,
+                                                                            self.y,
+                                                                            self.size, self.size)
         elif self.state == CharacterState.IDLE:
-            orkWalkImageList[0][self.frame % numOfWalkImage].composite_draw(0, 'h', self.x - camera.cameraXCoord, self.y,
-                                                                        self.size, self.size)
+            orkWalkImageList[0][self.frame % numOfWalkImage].composite_draw(0, 'h', self.x - camera.cameraXCoord,
+                                                                            self.y,
+                                                                            self.size, self.size)
         elif self.state == CharacterState.ATTACK:
-            orkAttackImageList[0][self.frame % numOfAttackImage].composite_draw(0, 'h', self.x - camera.cameraXCoord, self.y,
-                                                                        self.size, self.size)
-        elif self.state == CharacterState.DIE:
-            orkDieImageList[0][self.frame % numOfAttackImage].composite_draw(0, 'h', self.x - camera.cameraXCoord,self.y,
+            orkAttackImageList[0][self.frame % numOfAttackImage].composite_draw(0, 'h', self.x - camera.cameraXCoord,
+                                                                                self.y,
                                                                                 self.size, self.size)
-
+        elif self.state == CharacterState.DIE:
+            orkDieImageList[0][self.frame % numOfAttackImage].composite_draw(0, 'h', self.x - camera.cameraXCoord,
+                                                                             self.y,
+                                                                             self.size, self.size)
 
     def move(self):
         pass
@@ -57,16 +62,23 @@ class Ork1(CharacterABC):
 
         elif self.state == CharacterState.ATTACK:
             self.frame += 1
-            if self.frame % 4 == 0:
+            if self.frame % numOfAttackImage == 0:
                 worldObjManager.allyCharacterList[0].hp -= self.offensePower
                 if worldObjManager.allyCharacterList[0].hp <= 0:
+                    self.state = CharacterState.WALK
                     worldObjManager.allyCharacterList[0].state = CharacterState.DIE
-                    worldObjManager.allyCharacterList[0].frame = 0
+                    # 상대캐릭터가 죽으면 나는 WALK상태가되고 상대는 DIE상태가된다.
 
         elif self.state == CharacterState.DIE:
             self.frame += 1
             if self.frame == numOfDieImage:
-                worldObjManager.deleteObject(2)
+                if (len(worldObjManager.enemyDeathList) > 0):
+                    worldObjManager.deleteObject(2,self)
+                    if(len(worldObjManager.enemyCharacterList) > 0):
+                        worldObjManager.enemyCharacterList[0].state = CharacterState.WALK
+
+        if self.hp <= 0:
+            return True
 
     def checkCollision(self, frontCharacterXpos):
         if self.x < frontCharacterXpos + self.size:
@@ -76,12 +88,13 @@ class Ork1(CharacterABC):
 
     def checkEnemyMeet(self, enemyXpos):
         if self.x < enemyXpos + self.size:
-            if self.state != CharacterState.ATTACK:
+            if self.state != CharacterState.ATTACK and worldObjManager.allyCharacterList[0].hp>0:
                 self.state = CharacterState.ATTACK
                 self.frame = 0
 
     def changeState(self):
         pass
+
 
 """
 class Ork2(CharacterABC):

@@ -4,7 +4,8 @@
 baseList = []
 allyCharacterList = []
 enemyCharacterList = []
-
+allyDeathList = []
+enemyDeathList = []
 
 # add object according to its own type
 def addObject(object, type):
@@ -17,18 +18,29 @@ def addObject(object, type):
 
 
 def update():
+    #일반적인 로직업데이트 루프. 반환값은BOOL이며 TRUE시 객체가 곧 파괴.
     for i in range(0, len(allyCharacterList)):
-        allyCharacterList[i].update()
+        if(allyCharacterList[i].update()):
+            allyCharacterList[i].frame = 0
+            allyDeathList.append(allyCharacterList.pop(i))
+            break
 
+    #적군과 충돌체크
     if (len(allyCharacterList) > 0 and len(enemyCharacterList) > 0):
         allyCharacterList[0].checkEnemyMeet(enemyCharacterList[0].x)
 
+    #앞에 있는 아군과의 충돌체크.
     if (len(allyCharacterList) > 0):
         for i in range(1, len(allyCharacterList)):
             allyCharacterList[i].checkCollision(allyCharacterList[i - 1].x)
 
+
+
     for i in range(0, len(enemyCharacterList)):
-        enemyCharacterList[i].update()
+        if(enemyCharacterList[i].update()):
+            enemyCharacterList[i].frame = 0
+            enemyDeathList.append(enemyCharacterList.pop(i))
+            break
 
     if (len(allyCharacterList) > 0 and len(enemyCharacterList) > 0):
         enemyCharacterList[0].checkEnemyMeet(allyCharacterList[0].x)
@@ -38,15 +50,25 @@ def update():
             enemyCharacterList[i].checkCollision(enemyCharacterList[i - 1].x)
 
 
-def deleteObject(type):
+    #죽은상태......(DIE애니메이션을위한 update)
+    if(len(allyDeathList)>0):
+        for i in range(0,len(allyDeathList)):
+            allyDeathList[i].update()
+
+    if (len(enemyDeathList) > 0):
+        for i in range(0, len(allyDeathList)):
+            enemyDeathList[i].update()
+
+
+def deleteObject(type,object):
     if type == 1:
-        del allyCharacterList[0]
+        allyDeathList.remove(object)
     elif type == 2:
-        del enemyCharacterList[0]
+        enemyDeathList.remove(object)
+    del object
     # 캐릭터 사망 추가시 구현예정.
     # 아군 사망시 del allyCharacter[0]
     # 적군 사망시 알지?
-    pass
 
 
 # draw all object in each list
@@ -59,6 +81,13 @@ def drawObject():
 
     for obj in enemyCharacterList:
         obj.draw()
+    #죽는 이미지를 그리기위한 코드.
+    if (len(allyDeathList) > 0):
+        for i in range(0, len(allyDeathList)):
+            allyDeathList[i].draw()
+    if (len(enemyDeathList) > 0):
+        for i in range(0, len(allyDeathList)):
+            enemyDeathList[i].draw()
 
 
 # delete all objects when game is over.

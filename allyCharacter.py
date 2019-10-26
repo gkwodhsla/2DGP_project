@@ -35,7 +35,7 @@ class Knight1(CharacterABC):
         self.y = y
         self.frame = 0
         self.hp = 100
-        self.offensePower = 10
+        self.offensePower = 1
 
     def draw(self):
         if self.state == CharacterState.WALK:
@@ -61,16 +61,24 @@ class Knight1(CharacterABC):
 
         elif self.state == CharacterState.ATTACK:
             self.frame += 1
-            if self.frame % 4 == 0:
+            if self.frame % numOfAttackImage == 0:
                 worldObjManager.enemyCharacterList[0].hp -= self.offensePower
-                if worldObjManager.enemyCharacterList[0].hp <= 0:
+                if worldObjManager.enemyCharacterList[0].hp <=0:
+                    self.state = CharacterState.WALK
                     worldObjManager.enemyCharacterList[0].state = CharacterState.DIE
-                    worldObjManager.enemyCharacterList[0].frame = 0
 
+                    #상대캐릭터가 죽으면 나는 WALK상태가되고 상대는 DIE상태가된다.
         elif self.state == CharacterState.DIE:
             self.frame+=1
             if self.frame == numOfDieImage:
-                worldObjManager.deleteObject(1)
+                if (len(worldObjManager.allyDeathList) > 0):
+                    worldObjManager.deleteObject(1,self)
+                    if (len(worldObjManager.allyCharacterList) > 0):
+                        worldObjManager.allyCharacterList[0].state = CharacterState.WALK
+        if self.hp<=0:
+            return True
+
+        return False
 
     def checkCollision(self, frontCharacterXpos):
         if self.x + self.size > frontCharacterXpos:
@@ -80,7 +88,7 @@ class Knight1(CharacterABC):
 
     def checkEnemyMeet(self, enemyXpos):
         if self.x + self.size > enemyXpos:
-            if self.state != CharacterState.ATTACK:
+            if self.state != CharacterState.ATTACK and worldObjManager.enemyCharacterList[0].hp>0:
                 self.state = CharacterState.ATTACK
                 self.frame = 0
 
