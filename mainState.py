@@ -25,6 +25,8 @@ def exit():
     global allyBase,enemyBase
     del(allyBase)
     del(enemyBase)
+    allyCharacter.exit()
+    enemyCharacter.exit()
     camera.exit()
 
 

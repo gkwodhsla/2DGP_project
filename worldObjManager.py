@@ -66,9 +66,6 @@ def deleteObject(type,object):
     elif type == 2:
         enemyDeathList.remove(object)
     del object
-    # 캐릭터 사망 추가시 구현예정.
-    # 아군 사망시 del allyCharacter[0]
-    # 적군 사망시 알지?
 
 
 # draw all object in each list

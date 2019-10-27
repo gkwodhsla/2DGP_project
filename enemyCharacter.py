@@ -8,8 +8,13 @@ orkWalkImageList = [[] for i in range(0, 3)]
 orkAttackImageList = [[] for i in range(0, 3)]
 orkDieImageList = [[] for i in range(0, 3)]
 
+hpBarImage = None
+
+hpBarPos = 10
+hpBarHeigt = 10
 
 def loadOrkImage():
+    global hpBarImage
     for i in range(0, numOfWalkImage + 1):
         orkWalkImageList[0].append(load_image("Enemy\\Orks\\1_ORK\\WALK\\WALK_00" + str(i) + ".png"))
         # orkWalkImageList[1].append(load_image("Enemy\\Orks\\2_ORK\\WALK\\WALK_00" + str(i) + ".png"))
@@ -22,6 +27,23 @@ def loadOrkImage():
         orkDieImageList[0].append(load_image("Enemy\\Orks\\1_ORK\\DIE\\DIE_00" + str(i) + ".png"))
         # orkWalkImageList[1].append(load_image("Enemy\\Orks\\2_ORK\\DIE\\DIE_00" + str(i) + ".png"))
         # orkWalkImageList[2].append(load_image("Enemy\\Orks\\3_ORK\\DIE\\DIE_00" + str(i) + ".png""))
+    hpBarImage = load_image("enemyHpBar.png")
+
+def exit():
+    del hpBarImage
+    for i in range(0, numOfWalkImage + 1):
+        del(orkWalkImageList[0])
+        #del(orkWalkImageList[1])
+        #del(orkWalkImageList[2])
+    for i in range(0, numOfAttackImage + 1):
+        del(orkAttackImageList[0])
+        #del(orkAttackImageList[1])
+        #del(orkAttackImageList[2])
+
+    for i in range(0, numOfDieImage + 1):
+        del(orkDieImageList[0])
+        #del(orkDieImageList[1])
+        #del(orkDieImageList[2])
 
 
 class Ork1(CharacterABC):
@@ -31,19 +53,22 @@ class Ork1(CharacterABC):
         self.x = x
         self.y = y
         self.frame = 0
-        self.hp = 100
+        self.hp = 200
         self.offensePower = 2
 
     def draw(self):
         if self.state == CharacterState.WALK:
+            hpBarImage.draw(self.x + hpBarPos - camera.cameraXCoord, self.y + self.size / 2, self.hp / 2, hpBarHeigt)
             orkWalkImageList[0][self.frame % numOfWalkImage].composite_draw(0, 'h', self.x - camera.cameraXCoord,
                                                                             self.y,
                                                                             self.size, self.size)
         elif self.state == CharacterState.IDLE:
+            hpBarImage.draw(self.x + hpBarPos - camera.cameraXCoord, self.y + self.size / 2, self.hp / 2, hpBarHeigt)
             orkWalkImageList[0][self.frame % numOfWalkImage].composite_draw(0, 'h', self.x - camera.cameraXCoord,
                                                                             self.y,
                                                                             self.size, self.size)
         elif self.state == CharacterState.ATTACK:
+            hpBarImage.draw(self.x + hpBarPos - camera.cameraXCoord, self.y + self.size / 2, self.hp / 2, hpBarHeigt)
             orkAttackImageList[0][self.frame % numOfAttackImage].composite_draw(0, 'h', self.x - camera.cameraXCoord,
                                                                                 self.y,
                                                                                 self.size, self.size)
