@@ -25,6 +25,9 @@ def update():
             allyDeathList.append(allyCharacterList.pop(i))
             break
 
+    if(len(allyCharacterList) > 0):
+        allyCharacterList[0].checkBaseCollision()
+
     #적군과 충돌체크
     if (len(allyCharacterList) > 0 and len(enemyCharacterList) > 0):
         allyCharacterList[0].checkEnemyMeet(enemyCharacterList[0].x)
@@ -41,6 +44,9 @@ def update():
             enemyCharacterList[i].frame = 0
             enemyDeathList.append(enemyCharacterList.pop(i))
             break
+
+    if (len(enemyCharacterList) > 0):
+        enemyCharacterList[0].checkBaseCollision()
 
     if (len(allyCharacterList) > 0 and len(enemyCharacterList) > 0):
         enemyCharacterList[0].checkEnemyMeet(allyCharacterList[0].x)

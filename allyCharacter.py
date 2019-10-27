@@ -56,6 +56,7 @@ class Knight1(CharacterABC):
         self.frame = 0
         self.hp = 100
         self.offensePower = 10
+        self.isBaseAttack = False
 
     def draw(self):
         if self.state == CharacterState.WALK:
@@ -81,17 +82,20 @@ class Knight1(CharacterABC):
     def update(self):
         if self.state == CharacterState.WALK:
             self.frame += 1
-            self.x += 0.1
+            self.x += 1
 
         elif self.state == CharacterState.ATTACK:
             self.frame += 1
             if self.frame % numOfAttackImage == 0:
-                worldObjManager.enemyCharacterList[0].hp -= self.offensePower
-                if worldObjManager.enemyCharacterList[0].hp <= 0:
-                    self.state = CharacterState.WALK
-                    worldObjManager.enemyCharacterList[0].state = CharacterState.DIE
+                if not self.isBaseAttack:
+                    worldObjManager.enemyCharacterList[0].hp -= self.offensePower
+                    if worldObjManager.enemyCharacterList[0].hp <= 0:
+                        self.state = CharacterState.WALK
+                        worldObjManager.enemyCharacterList[0].state = CharacterState.DIE
+                        # 상대캐릭터가 죽으면 나는 WALK상태가되고 상대는 DIE상태가된다.
+                else:
+                    worldObjManager.baseList[1].hp -= self.offensePower
 
-                    # 상대캐릭터가 죽으면 나는 WALK상태가되고 상대는 DIE상태가된다.
         elif self.state == CharacterState.DIE:
             self.frame += 1
             if self.frame == numOfDieImage:
@@ -99,6 +103,7 @@ class Knight1(CharacterABC):
                     worldObjManager.deleteObject(1, self)
                 if (len(worldObjManager.allyCharacterList) > 0):
                     worldObjManager.allyCharacterList[0].state = CharacterState.WALK
+
         if self.hp <= 0:
             return True
 
@@ -115,6 +120,11 @@ class Knight1(CharacterABC):
             if self.state != CharacterState.ATTACK and worldObjManager.enemyCharacterList[0].hp > 0:
                 self.state = CharacterState.ATTACK
                 self.frame = 0
+
+    def checkBaseCollision(self):
+        if self.x + self.size > worldObjManager.baseList[1].x:
+            self.state = CharacterState.ATTACK
+            self.isBaseAttack = True
 
     def changeState(self):
         pass

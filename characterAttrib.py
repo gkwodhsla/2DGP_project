@@ -33,5 +33,8 @@ class CharacterABC(metaclass=ABCMeta):
     def checkEnemyMeet(self, enemyXpos):
         pass
 
+    def checkBaseCollision(self):
+        pass
+
     def changeState(self):
         pass

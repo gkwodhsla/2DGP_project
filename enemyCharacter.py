@@ -55,6 +55,7 @@ class Ork1(CharacterABC):
         self.frame = 0
         self.hp = 200
         self.offensePower = 2
+        self.isBaseAttack = False
 
     def draw(self):
         if self.state == CharacterState.WALK:
@@ -83,16 +84,19 @@ class Ork1(CharacterABC):
     def update(self):
         if self.state == CharacterState.WALK:
             self.frame += 1
-            self.x -= 0.2
+            self.x -= 1
 
         elif self.state == CharacterState.ATTACK:
             self.frame += 1
             if self.frame % numOfAttackImage == 0:
-                worldObjManager.allyCharacterList[0].hp -= self.offensePower
-                if worldObjManager.allyCharacterList[0].hp <= 0:
-                    self.state = CharacterState.WALK
-                    worldObjManager.allyCharacterList[0].state = CharacterState.DIE
+                if not self.isBaseAttack:
+                    worldObjManager.allyCharacterList[0].hp -= self.offensePower
+                    if worldObjManager.allyCharacterList[0].hp <= 0:
+                        self.state = CharacterState.WALK
+                        worldObjManager.allyCharacterList[0].state = CharacterState.DIE
                     # 상대캐릭터가 죽으면 나는 WALK상태가되고 상대는 DIE상태가된다.
+                else:
+                    worldObjManager.baseList[0].hp -= self.offensePower
 
         elif self.state == CharacterState.DIE:
             self.frame += 1
@@ -115,6 +119,11 @@ class Ork1(CharacterABC):
             if self.state != CharacterState.ATTACK and worldObjManager.allyCharacterList[0].hp>0:
                 self.state = CharacterState.ATTACK
                 self.frame = 0
+
+    def checkBaseCollision(self):
+        if self.x < worldObjManager.baseList[0].x + worldObjManager.baseList[0].size/2:
+            self.state = CharacterState.ATTACK
+            self.isBaseAttack = True
 
     def changeState(self):
         pass

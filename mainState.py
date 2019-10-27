@@ -15,8 +15,8 @@ def enter():
     camera.enter()
     allyCharacter.loadKnightImage()
     enemyCharacter.loadOrkImage()
-    allyBase = base("base\\allyBase.png", 150, 150, True)
-    enemyBase = base("base\\enemyBase.png", camera.backgroundImage.w - 150, 150, False)
+    allyBase = base("base\\allyBase.png", 200, 150, True)
+    enemyBase = base("base\\enemyBase.png", camera.backgroundImage.w - 200, 150, False)
 
     worldObjManager.addObject(allyBase, 0)
     worldObjManager.addObject(enemyBase, 0)
