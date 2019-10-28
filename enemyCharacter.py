@@ -1,20 +1,19 @@
 from characterAttrib import *
 import worldObjManager
 
+numOfIdleImage = 
 numOfWalkImage = 6
 numOfAttackImage = 6
 numOfDieImage = 6
+orkIdleImageList = [[] for i in range(0,3)]
 orkWalkImageList = [[] for i in range(0, 3)]
 orkAttackImageList = [[] for i in range(0, 3)]
 orkDieImageList = [[] for i in range(0, 3)]
-
-hpBarImage = None
 
 hpBarPos = 10
 hpBarHeigt = 10
 
 def loadOrkImage():
-    global hpBarImage
     for i in range(0, numOfWalkImage + 1):
         orkWalkImageList[0].append(load_image("Enemy\\Orks\\1_ORK\\WALK\\WALK_00" + str(i) + ".png"))
         # orkWalkImageList[1].append(load_image("Enemy\\Orks\\2_ORK\\WALK\\WALK_00" + str(i) + ".png"))
@@ -27,10 +26,12 @@ def loadOrkImage():
         orkDieImageList[0].append(load_image("Enemy\\Orks\\1_ORK\\DIE\\DIE_00" + str(i) + ".png"))
         # orkWalkImageList[1].append(load_image("Enemy\\Orks\\2_ORK\\DIE\\DIE_00" + str(i) + ".png"))
         # orkWalkImageList[2].append(load_image("Enemy\\Orks\\3_ORK\\DIE\\DIE_00" + str(i) + ".png""))
-    hpBarImage = load_image("enemyHpBar.png")
+    for i in range(0, numOfDieImage + 1):
+        orkDieImageList[0].append(load_image("Enemy\\Orks\\1_ORK\\DIE\\DIE_00" + str(i) + ".png"))
+        # orkWalkImageList[1].append(load_image("Enemy\\Orks\\2_ORK\\DIE\\DIE_00" + str(i) + ".png"))
+        # orkWalkImageList[2].append(load_image("Enemy\\Orks\\3_ORK\\DIE\\DIE_00" + str(i) + ".png""))
 
 def exit():
-    del hpBarImage
     for i in range(0, numOfWalkImage + 1):
         del(orkWalkImageList[0])
         #del(orkWalkImageList[1])
@@ -47,8 +48,8 @@ def exit():
 
 
 class Ork1(CharacterABC):
-    state = CharacterState.WALK
-
+    state = WalkState
+    hpBarImage = None
     def __init__(self, x, y):
         self.x = x
         self.y = y
@@ -56,6 +57,8 @@ class Ork1(CharacterABC):
         self.hp = 200
         self.offensePower = 2
         self.isBaseAttack = False
+        if self.hpBarImage==None:
+            self.hpBarImage = load_image("enemyHpBar.png")
 
     def draw(self):
         if self.state == CharacterState.WALK:

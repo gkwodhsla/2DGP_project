@@ -1,109 +1,29 @@
 from characterAttrib import *
 import worldObjManager
 
-numOfWalkImage = 6
-numOfAttackImage = 7
-numOfDieImage = 6
-knightWalkImageList = [[] for i in range(0, 3)]
-knightAttackImageList = [[] for i in range(0, 3)]
-knightDieImageList = [[] for i in range(0, 3)]
-hpBarImage = None
-
-hpBarPos = 20
-hpBarHeigt = 10
-
-# 기사 걷는 이미지가 담긴 리스트.
-
-def loadKnightImage():
-    global hpBarImage
-    for i in range(0, numOfWalkImage + 1):
-        knightWalkImageList[0].append(load_image("Ally\\Knight\\1_KNIGHT\\_WALK\\_WALK_00" + str(i) + ".png"))
-        # knightWalkImageList[1].append(load_image("Ally\\Knight\\2_KNIGHT\\_WALK\\_WALK_00" + str(i) + ".png"))
-        # knightWalkImageList[2].append(load_image("Ally\\Knight\\3_KNIGHT\\_WALK\\_WALK_00" + str(i) + ".png"))
-    for i in range(0, numOfAttackImage + 1):
-        knightAttackImageList[0].append(load_image("Ally\\Knight\\1_KNIGHT\\_ATTACK\\ATTACK_00" + str(i) + ".png"))
-        # knightAttackImageList[1].append(load_image("Ally\\Knight\\2_KNIGHT\\_ATTACK\\ATTACK_00" + str(i) + ".png"))
-        # knightAttackImageList[2].append(load_image("Ally\\Knight\\3_KNIGHT\\_ATTACK\\ATTACK_00" + str(i) + ".png"))
-    for i in range(0, numOfDieImage + 1):
-        knightDieImageList[0].append(load_image("Ally\\Knight\\1_KNIGHT\\_DIE\\_DIE_00" + str(i) + ".png"))
-        # knightDieImageList[1].append(load_image("Ally\\Knight\\2_KNIGHT\\_DIE\\_DIE_00" + str(i) + ".png"))
-        # knightDieImageList[2].append(load_image("Ally\\Knight\\2_KNIGHT\\_DIE\\_DIE_00" + str(i) + ".png"))
-    hpBarImage = load_image("hpBar.png")
-
-def exit():
-    del hpBarImage
-    for i in range(0, numOfWalkImage + 1):
-        del(knightWalkImageList[0])
-        #del(knightWalkImageList[1])
-        #del(knightWalkImageList[2])
-    for i in range(0, numOfAttackImage + 1):
-        del(knightAttackImageList[0])
-        #del(knightAttackImageList[1])
-        #del(knightAttackImageList[2])
-    for i in range(0, numOfDieImage + 1):
-        del(knightDieImageList[0])
-        #del(knightDieImageList[0])
-        #del(knightDieImageList[0])
-# 이미지 로드.
-
 
 class Knight1(CharacterABC):
-    state = CharacterState.WALK
+    state = WalkState
+    hpBarImage = None
 
     def __init__(self, x, y):
         self.x = x
         self.y = y
         self.frame = 0
         self.hp = 100
-        self.offensePower = 10
+        self.offensePower = 100
         self.isBaseAttack = False
+        if self.hpBarImage == None:
+            self.hpBarImage = load_image("hpBar.png")
 
     def draw(self):
-        if self.state == CharacterState.WALK:
-            hpBarImage.draw(self.x-hpBarPos-camera.cameraXCoord,self.y+self.size/2,self.hp/2,hpBarHeigt)
-            knightWalkImageList[0][self.frame % numOfWalkImage].draw(self.x - camera.cameraXCoord, self.y, self.size,
-                                                                     self.size)
-        elif self.state == CharacterState.IDLE:
-            hpBarImage.draw(self.x - hpBarPos - camera.cameraXCoord, self.y + self.size / 2, self.hp / 2, hpBarHeigt)
-            knightWalkImageList[0][self.frame % numOfWalkImage].draw(self.x - camera.cameraXCoord, self.y, self.size,
-                                                                     self.size)
-        elif self.state == CharacterState.ATTACK:
-            hpBarImage.draw(self.x - hpBarPos - camera.cameraXCoord, self.y + self.size / 2, self.hp / 2, hpBarHeigt)
-            knightAttackImageList[0][self.frame % numOfAttackImage].draw(self.x - camera.cameraXCoord, self.y,
-                                                                         self.size,
-                                                                         self.size)
-        elif self.state == CharacterState.DIE:
-            knightDieImageList[0][self.frame & numOfDieImage].draw(self.x - camera.cameraXCoord, self.y, self.size,
-                                                                   self.size)
+        self.state.draw(self, 0, 0)
 
     def move(self):
         pass
 
     def update(self):
-        if self.state == CharacterState.WALK:
-            self.frame += 1
-            self.x += 1
-
-        elif self.state == CharacterState.ATTACK:
-            self.frame += 1
-            if self.frame % numOfAttackImage == 0:
-                if not self.isBaseAttack:
-                    worldObjManager.enemyCharacterList[0].hp -= self.offensePower
-                    if worldObjManager.enemyCharacterList[0].hp <= 0:
-                        self.state = CharacterState.WALK
-                        worldObjManager.enemyCharacterList[0].state = CharacterState.DIE
-                        # 상대캐릭터가 죽으면 나는 WALK상태가되고 상대는 DIE상태가된다.
-                else:
-                    worldObjManager.baseList[1].hp -= self.offensePower
-
-        elif self.state == CharacterState.DIE:
-            self.frame += 1
-            if self.frame == numOfDieImage:
-                if (len(worldObjManager.allyDeathList) > 0):
-                    worldObjManager.deleteObject(1, self)
-                if (len(worldObjManager.allyCharacterList) > 0):
-                    worldObjManager.allyCharacterList[0].state = CharacterState.WALK
-
+        self.state.update(self, 0)
         if self.hp <= 0:
             return True
 
@@ -111,19 +31,21 @@ class Knight1(CharacterABC):
 
     def checkCollision(self, frontCharacterXpos):
         if self.x + self.size > frontCharacterXpos:
-            self.state = CharacterState.IDLE
+            self.state = IdleState
         else:
-            self.state = CharacterState.WALK
+            self.state = WalkState
 
     def checkEnemyMeet(self, enemyXpos):
         if self.x + self.size > enemyXpos:
-            if self.state != CharacterState.ATTACK and worldObjManager.enemyCharacterList[0].hp > 0:
-                self.state = CharacterState.ATTACK
+            if self.state != AttackState and worldObjManager.enemyCharacterList[0].hp > 0:
+                self.state = AttackState
                 self.frame = 0
+        else:
+            self.state = WalkState
 
     def checkBaseCollision(self):
         if self.x + self.size > worldObjManager.baseList[1].x:
-            self.state = CharacterState.ATTACK
+            self.state = AttackState
             self.isBaseAttack = True
 
     def changeState(self):
