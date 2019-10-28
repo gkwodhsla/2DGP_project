@@ -1,55 +1,11 @@
 from characterAttrib import *
 import worldObjManager
 
-numOfIdleImage = 
-numOfWalkImage = 6
-numOfAttackImage = 6
-numOfDieImage = 6
-orkIdleImageList = [[] for i in range(0,3)]
-orkWalkImageList = [[] for i in range(0, 3)]
-orkAttackImageList = [[] for i in range(0, 3)]
-orkDieImageList = [[] for i in range(0, 3)]
-
-hpBarPos = 10
-hpBarHeigt = 10
-
-def loadOrkImage():
-    for i in range(0, numOfWalkImage + 1):
-        orkWalkImageList[0].append(load_image("Enemy\\Orks\\1_ORK\\WALK\\WALK_00" + str(i) + ".png"))
-        # orkWalkImageList[1].append(load_image("Enemy\\Orks\\2_ORK\\WALK\\WALK_00" + str(i) + ".png"))
-        # orkWalkImageList[2].append(load_image("Enemy\\Orks\\3_ORK\\WALK\\WALK_00" + str(i) + ".png"))
-    for i in range(0, numOfAttackImage + 1):
-        orkAttackImageList[0].append(load_image("Enemy\\Orks\\1_ORK\\ATTAK\\ATTAK_00" + str(i) + ".png"))
-        # orkWalkImageList[1].append(load_image("Enemy\\Orks\\2_ORK\\ATTAK\\ATTAK_00" + str(i) + ".png"))
-        # orkWalkImageList[2].append(load_image("Enemy\\Orks\\3_ORK\\ATTAK\\ATTAK_00" + str(i) + ".png""))
-    for i in range(0, numOfDieImage + 1):
-        orkDieImageList[0].append(load_image("Enemy\\Orks\\1_ORK\\DIE\\DIE_00" + str(i) + ".png"))
-        # orkWalkImageList[1].append(load_image("Enemy\\Orks\\2_ORK\\DIE\\DIE_00" + str(i) + ".png"))
-        # orkWalkImageList[2].append(load_image("Enemy\\Orks\\3_ORK\\DIE\\DIE_00" + str(i) + ".png""))
-    for i in range(0, numOfDieImage + 1):
-        orkDieImageList[0].append(load_image("Enemy\\Orks\\1_ORK\\DIE\\DIE_00" + str(i) + ".png"))
-        # orkWalkImageList[1].append(load_image("Enemy\\Orks\\2_ORK\\DIE\\DIE_00" + str(i) + ".png"))
-        # orkWalkImageList[2].append(load_image("Enemy\\Orks\\3_ORK\\DIE\\DIE_00" + str(i) + ".png""))
-
-def exit():
-    for i in range(0, numOfWalkImage + 1):
-        del(orkWalkImageList[0])
-        #del(orkWalkImageList[1])
-        #del(orkWalkImageList[2])
-    for i in range(0, numOfAttackImage + 1):
-        del(orkAttackImageList[0])
-        #del(orkAttackImageList[1])
-        #del(orkAttackImageList[2])
-
-    for i in range(0, numOfDieImage + 1):
-        del(orkDieImageList[0])
-        #del(orkDieImageList[1])
-        #del(orkDieImageList[2])
-
 
 class Ork1(CharacterABC):
     state = WalkState
     hpBarImage = None
+
     def __init__(self, x, y):
         self.x = x
         self.y = y
@@ -57,75 +13,39 @@ class Ork1(CharacterABC):
         self.hp = 200
         self.offensePower = 2
         self.isBaseAttack = False
-        if self.hpBarImage==None:
+        if self.hpBarImage == None:
             self.hpBarImage = load_image("enemyHpBar.png")
 
     def draw(self):
-        if self.state == CharacterState.WALK:
-            hpBarImage.draw(self.x + hpBarPos - camera.cameraXCoord, self.y + self.size / 2, self.hp / 2, hpBarHeigt)
-            orkWalkImageList[0][self.frame % numOfWalkImage].composite_draw(0, 'h', self.x - camera.cameraXCoord,
-                                                                            self.y,
-                                                                            self.size, self.size)
-        elif self.state == CharacterState.IDLE:
-            hpBarImage.draw(self.x + hpBarPos - camera.cameraXCoord, self.y + self.size / 2, self.hp / 2, hpBarHeigt)
-            orkWalkImageList[0][self.frame % numOfWalkImage].composite_draw(0, 'h', self.x - camera.cameraXCoord,
-                                                                            self.y,
-                                                                            self.size, self.size)
-        elif self.state == CharacterState.ATTACK:
-            hpBarImage.draw(self.x + hpBarPos - camera.cameraXCoord, self.y + self.size / 2, self.hp / 2, hpBarHeigt)
-            orkAttackImageList[0][self.frame % numOfAttackImage].composite_draw(0, 'h', self.x - camera.cameraXCoord,
-                                                                                self.y,
-                                                                                self.size, self.size)
-        elif self.state == CharacterState.DIE:
-            orkDieImageList[0][self.frame % numOfAttackImage].composite_draw(0, 'h', self.x - camera.cameraXCoord,
-                                                                             self.y,
-                                                                             self.size, self.size)
+        self.state.draw(self, 1, 0)
 
     def move(self):
         pass
 
     def update(self):
-        if self.state == CharacterState.WALK:
-            self.frame += 1
-            self.x -= 1
-
-        elif self.state == CharacterState.ATTACK:
-            self.frame += 1
-            if self.frame % numOfAttackImage == 0:
-                if not self.isBaseAttack:
-                    worldObjManager.allyCharacterList[0].hp -= self.offensePower
-                    if worldObjManager.allyCharacterList[0].hp <= 0:
-                        self.state = CharacterState.WALK
-                        worldObjManager.allyCharacterList[0].state = CharacterState.DIE
-                    # 상대캐릭터가 죽으면 나는 WALK상태가되고 상대는 DIE상태가된다.
-                else:
-                    worldObjManager.baseList[0].hp -= self.offensePower
-
-        elif self.state == CharacterState.DIE:
-            self.frame += 1
-            if self.frame == numOfDieImage:
-                if (len(worldObjManager.enemyDeathList) > 0):
-                    worldObjManager.deleteObject(2, self)
-                if (len(worldObjManager.enemyCharacterList) > 0):
-                    worldObjManager.enemyCharacterList[0].state = CharacterState.WALK
+        self.state.update(self, 1)
         if self.hp <= 0:
             return True
 
+        return False
+
     def checkCollision(self, frontCharacterXpos):
         if self.x < frontCharacterXpos + self.size:
-            self.state = CharacterState.IDLE
+            self.state = IdleState
         else:
-            self.state = CharacterState.WALK
+            self.state = WalkState
 
     def checkEnemyMeet(self, enemyXpos):
         if self.x < enemyXpos + self.size:
-            if self.state != CharacterState.ATTACK and worldObjManager.allyCharacterList[0].hp>0:
-                self.state = CharacterState.ATTACK
+            if self.state != AttackState and worldObjManager.allyCharacterList[0].hp > 0:
+                self.state = AttackState
                 self.frame = 0
+        else:
+            self.state=WalkState
 
     def checkBaseCollision(self):
-        if self.x < worldObjManager.baseList[0].x + worldObjManager.baseList[0].size/2:
-            self.state = CharacterState.ATTACK
+        if self.x < worldObjManager.baseList[0].x + worldObjManager.baseList[0].size / 2:
+            self.state = AttackState
             self.isBaseAttack = True
 
     def changeState(self):

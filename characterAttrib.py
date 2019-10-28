@@ -9,13 +9,26 @@ numOfAllyAttackImage = 7
 numOfAllyDieImage = 6
 numOfAllyIdleImage = 7
 
-AllyhpBarPos = 20
-AllyhpBarHeigth = 10
+allyhpBarPos = 20
+allyhpBarHeigth = 10
 
-knightIdleImageList = [[] for i in range(0 , 3)]
+knightIdleImageList = [[] for i in range(0, 3)]
 knightWalkImageList = [[] for i in range(0, 3)]
 knightAttackImageList = [[] for i in range(0, 3)]
 knightDieImageList = [[] for i in range(0, 3)]
+
+numOfEnemyIdleImage = 6
+numOfEnemyWalkImage = 6
+numOfEnemyAttackImage = 6
+numOfEnemyDieImage = 6
+
+enemyhpBarPos = 10
+enemyhpBarHeigt = 10
+
+orkIdleImageList = [[] for i in range(0, 3)]
+orkWalkImageList = [[] for i in range(0, 3)]
+orkAttackImageList = [[] for i in range(0, 3)]
+orkDieImageList = [[] for i in range(0, 3)]
 
 
 # 기사 걷는 이미지가 담긴 리스트.
@@ -38,20 +51,62 @@ def loadKnightImage():
         # knightIdleImageList[1].append(load_image("Ally\\Knight\\2_KNIGHT\\_IDLE\\_IDLE_00" + str(i) + ".png"))
         # knightIdleImageList[2].append(load_image("Ally\\Knight\\2_KNIGHT\\_IDLE\\_IDLE_00" + str(i) + ".png"))
 
+def loadOrkImage():
+    for i in range(0, numOfEnemyWalkImage + 1):
+        orkWalkImageList[0].append(load_image("Enemy\\Orks\\1_ORK\\WALK\\WALK_00" + str(i) + ".png"))
+        # orkWalkImageList[1].append(load_image("Enemy\\Orks\\2_ORK\\WALK\\WALK_00" + str(i) + ".png"))
+        # orkWalkImageList[2].append(load_image("Enemy\\Orks\\3_ORK\\WALK\\WALK_00" + str(i) + ".png"))
+    for i in range(0, numOfEnemyAttackImage + 1):
+        orkAttackImageList[0].append(load_image("Enemy\\Orks\\1_ORK\\ATTAK\\ATTAK_00" + str(i) + ".png"))
+        # orkWalkImageList[1].append(load_image("Enemy\\Orks\\2_ORK\\ATTAK\\ATTAK_00" + str(i) + ".png"))
+        # orkWalkImageList[2].append(load_image("Enemy\\Orks\\3_ORK\\ATTAK\\ATTAK_00" + str(i) + ".png""))
+    for i in range(0, numOfEnemyDieImage + 1):
+        orkDieImageList[0].append(load_image("Enemy\\Orks\\1_ORK\\DIE\\DIE_00" + str(i) + ".png"))
+        # orkWalkImageList[1].append(load_image("Enemy\\Orks\\2_ORK\\DIE\\DIE_00" + str(i) + ".png"))
+        # orkWalkImageList[2].append(load_image("Enemy\\Orks\\3_ORK\\DIE\\DIE_00" + str(i) + ".png""))
+    for i in range(0, numOfEnemyIdleImage + 1):
+        orkIdleImageList[0].append(load_image("Enemy\\Orks\\1_ORK\\IDLE\\IDLE_00" + str(i) + ".png"))
+        # orkIdleImageList[1].append(load_image("Enemy\\Orks\\2_ORK\\IDLE\\IDLE_00" + str(i) + ".png"))
+        # orkIdleImageList[2].append(load_image("Enemy\\Orks\\3_ORK\\IDLE\\IDLE_00" + str(i) + ".png""))
+
+
 def exit():
     for i in range(0, numOfAllyWalkImage + 1):
-        del(knightWalkImageList[0])
-        #del(knightWalkImageList[1])
-        #del(knightWalkImageList[2])
+        del (knightWalkImageList[0])
+        # del(knightWalkImageList[1])
+        # del(knightWalkImageList[2])
     for i in range(0, numOfAllyAttackImage + 1):
-        del(knightAttackImageList[0])
-        #del(knightAttackImageList[1])
-        #del(knightAttackImageList[2])
+        del (knightAttackImageList[0])
+        # del(knightAttackImageList[1])
+        # del(knightAttackImageList[2])
     for i in range(0, numOfAllyDieImage + 1):
-        del(knightDieImageList[0])
-        #del(knightDieImageList[0])
-        #del(knightDieImageList[0])
-# 이미지 로드.
+        del (knightDieImageList[0])
+        # del(knightDieImageList[0])
+        # del(knightDieImageList[0])
+    for i in range(0, numOfAllyIdleImage + 1):
+        del (knightIdleImageList[0])
+        # del(knightIdleImageList[1])
+        # del(knightIdleImageList[2])
+
+    for i in range(0, numOfEnemyWalkImage + 1):
+        del (orkWalkImageList[0])
+        # del(orkWalkImageList[1])
+        # del(orkWalkImageList[2])
+    for i in range(0, numOfEnemyAttackImage + 1):
+        del (orkAttackImageList[0])
+        # del(orkAttackImageList[1])
+        # del(orkAttackImageList[2])
+
+    for i in range(0, numOfEnemyDieImage + 1):
+        del (orkDieImageList[0])
+        # del(orkDieImageList[1])
+        # del(orkDieImageList[2])
+
+    for i in range(0, numOfEnemyIdleImage + 1):
+        del (orkIdleImageList[0])
+        # del(knightIdleImageList[1])
+        # del(knightIdleImageList[2])
+
 
 class CharacterABC(metaclass=ABCMeta):
     size = 100
@@ -65,7 +120,7 @@ class CharacterABC(metaclass=ABCMeta):
     def update(self):
         pass
 
-    def checkCollision(self,frontCharacterXpos):
+    def checkCollision(self, frontCharacterXpos):
         # 충돌처리는 월드 오브젝트 리스트의 맨앞에 있는 애들은 적군을 만났는지 아닌지 충돌체크하고 만나면 상태를 ATTACK으로 바꾼다.
         # 나머지뒤에 오브젝트들은 앞에 아군과 충돌인지 아닌지 검사한다. 만일 아군과 충돌이면 상태를 IDLE하게 해준다.
         # 아군 self.x+self.size<frontobject's Xpos
@@ -81,23 +136,32 @@ class CharacterABC(metaclass=ABCMeta):
     def changeState(self):
         pass
 
+
 class IdleState:
     @staticmethod
     def enter(object):
         object.frame = 0
+
     @staticmethod
-    def update(object,type):
+    def update(object, type):
         object.frame += 1
+
     @staticmethod
-    def draw(object,type,characterType):
+    def draw(object, type, characterType):
         # type0 = ally type1 = enemy
         # characterType==0 knight1 , 1 knight2, 2 knight 3
         if type == 0 and characterType == 0:
-            object.hpBarImage.draw(object.x - AllyhpBarPos - camera.cameraXCoord, object.y + object.size / 2, object.hp / 2, AllyhpBarHeigth)
-            knightIdleImageList[0][object.frame % numOfAllyIdleImage].draw(object.x - camera.cameraXCoord, object.y, object.size,
-                                                                     object.size)
+            object.hpBarImage.draw(object.x - allyhpBarPos - camera.cameraXCoord, object.y + object.size / 2,
+                                   object.hp / 2, allyhpBarHeigth)
+            knightIdleImageList[0][object.frame % numOfAllyIdleImage].draw(object.x - camera.cameraXCoord, object.y,
+                                                                           object.size,
+                                                                           object.size)
         else:
-            pass
+            object.hpBarImage.draw(object.x + enemyhpBarPos - camera.cameraXCoord, object.y + object.size / 2, object.hp / 2, enemyhpBarHeigt)
+            orkIdleImageList[0][object.frame % numOfEnemyIdleImage].composite_draw(0, 'h', object.x - camera.cameraXCoord,
+                                                                            object.y,
+                                                                            object.size, object.size)
+
     @staticmethod
     def exit(object):
         pass
@@ -107,21 +171,31 @@ class WalkState:
     @staticmethod
     def enter(object):
         object.frame = 0
+
     @staticmethod
-    def update(object,type):
+    def update(object, type):
         object.frame += 1
         if type == 0:
             object.x += 0.4
         else:
-            pass
+            object.x -= 0.4
+
     @staticmethod
-    def draw(object,type,characterType):
-        #type0 = ally type1 = enemy
-        #characterType==0 knight1 , 1 knight2, 2 knight 3
+    def draw(object, type, characterType):
+        # type0 = ally type1 = enemy
+        # characterType==0 (knight1,ork1) and so forth...
         if type == 0 and characterType == 0:
-            object.hpBarImage.draw(object.x - AllyhpBarPos - camera.cameraXCoord, object.y + object.size / 2, object.hp / 2, AllyhpBarHeigth)
-            knightWalkImageList[0][object.frame % numOfAllyWalkImage].draw(object.x - camera.cameraXCoord, object.y, object.size,
-                                                                     object.size)
+            object.hpBarImage.draw(object.x - allyhpBarPos - camera.cameraXCoord, object.y + object.size / 2,
+                                   object.hp / 2, allyhpBarHeigth)
+            knightWalkImageList[0][object.frame % numOfAllyWalkImage].draw(object.x - camera.cameraXCoord, object.y,
+                                                                           object.size,
+                                                                           object.size)
+        elif type == 1 and characterType == 0:
+            object.hpBarImage.draw(object.x + enemyhpBarPos - camera.cameraXCoord, object.y + object.size / 2, object.hp / 2, enemyhpBarHeigt)
+            orkWalkImageList[0][object.frame % numOfEnemyWalkImage].composite_draw(0, 'h', object.x - camera.cameraXCoord,
+                                                                            object.y,
+                                                                            object.size, object.size)
+
     @staticmethod
     def exit(object):
         pass
@@ -131,32 +205,51 @@ class AttackState:
     @staticmethod
     def enter(object):
         object.frame = 0
+
     @staticmethod
-    def update(object,type):
+    def update(object, type):
         object.frame += 1
         if type == 0:
             if object.frame % numOfAllyAttackImage == 0:
                 if not object.isBaseAttack:
                     worldObjManager.enemyCharacterList[0].hp -= object.offensePower
                     if worldObjManager.enemyCharacterList[0].hp <= 0:
-                        #object.state = WalkState
+                        object.state = WalkState
                         worldObjManager.enemyCharacterList[0].state = DeathState
                         # 상대캐릭터가 죽으면 나는 WALK상태가되고 상대는 DIE상태가된다.
                 else:
                     worldObjManager.baseList[1].hp -= object.offensePower
         else:
-            pass
+            if object.frame % numOfEnemyAttackImage == 0:
+                if not object.isBaseAttack:
+                    worldObjManager.allyCharacterList[0].hp -= object.offensePower
+                    if worldObjManager.allyCharacterList[0].hp <= 0:
+                        object.state = WalkState
+                        worldObjManager.allyCharacterList[0].state = DeathState
+                    # 상대캐릭터가 죽으면 나는 WALK상태가되고 상대는 DIE상태가된다.
+                else:
+                    worldObjManager.baseList[0].hp -= object.offensePower
+
     @staticmethod
-    def draw(object,type,characterType):
-        #type0 = ally type1 = enemy
-        #characterType==0 knight1 , 1 knight2, 2 knight 3
+    def draw(object, type, characterType):
+        # type0 = ally type1 = enemy
+        # characterType==0 knight1 , 1 knight2, 2 knight 3
         if type == 0 and characterType == 0:
-            object.hpBarImage.draw(object.x - AllyhpBarPos - camera.cameraXCoord, object.y + object.size / 2, object.hp / 2, AllyhpBarHeigth)
-            knightAttackImageList[0][object.frame % numOfAllyAttackImage].draw(object.x - camera.cameraXCoord, object.y, object.size,
-                                                                     object.size)
+            object.hpBarImage.draw(object.x - allyhpBarPos - camera.cameraXCoord, object.y + object.size / 2,
+                                   object.hp / 2, allyhpBarHeigth)
+            knightAttackImageList[0][object.frame % numOfAllyAttackImage].draw(object.x - camera.cameraXCoord, object.y,
+                                                                               object.size,
+                                                                               object.size)
+        elif type == 1 and characterType == 0:
+            object.hpBarImage.draw(object.x + enemyhpBarPos - camera.cameraXCoord, object.y + object.size / 2, object.hp / 2, enemyhpBarHeigt)
+            orkAttackImageList[0][object.frame % numOfEnemyAttackImage].composite_draw(0, 'h', object.x - camera.cameraXCoord,
+                                                                                object.y,
+                                                                                object.size, object.size)
+
     @staticmethod
     def exit(object):
         pass
+
 
 class DeathState:
     @staticmethod
@@ -168,23 +261,31 @@ class DeathState:
         object.frame += 1
         if type == 0:
             if object.frame == numOfAllyDieImage:
-                if (len(worldObjManager.allyDeathList) > 0):
+                if len(worldObjManager.allyDeathList) > 0:
                     worldObjManager.deleteObject(1, object)
-                if (len(worldObjManager.allyCharacterList) > 0):
-                    worldObjManager.allyCharacterList[0].state = CharacterState.WALK
+                # if (len(worldObjManager.allyCharacterList) > 0):
+                # worldObjManager.allyCharacterList[0].state = CharacterState.WALK
         else:
-            pass
+            if object.frame == numOfEnemyDieImage:
+                if (len(worldObjManager.enemyDeathList) > 0):
+                    worldObjManager.deleteObject(2, object)
+                #if (len(worldObjManager.enemyCharacterList) > 0):
+                    #worldObjManager.enemyCharacterList[0].state = CharacterState.WALK
 
     @staticmethod
     def draw(object, type, characterType):
         # type0 = ally type1 = enemy
         # characterType==0 knight1 , 1 knight2, 2 knight 3
         if type == 0 and characterType == 0:
-            object.hpBarImage.draw(object.x - AllyhpBarPos - camera.cameraXCoord, object.y + object.size / 2,
-                                   object.hp / 2, AllyhpBarHeigth)
+            object.hpBarImage.draw(object.x - allyhpBarPos - camera.cameraXCoord, object.y + object.size / 2,
+                                   object.hp / 2, allyhpBarHeigth)
             knightDieImageList[0][object.frame % numOfAllyDieImage].draw(object.x - camera.cameraXCoord, object.y,
-                                                                           object.size,
-                                                                           object.size)
+                                                                         object.size,
+                                                                         object.size)
+        elif type ==1 and characterType == 0:
+            orkDieImageList[0][object.frame % numOfEnemyAttackImage].composite_draw(0, 'h', object.x - camera.cameraXCoord,
+                                                                             object.y,
+                                                                             object.size, object.size)
 
     @staticmethod
     def exit(object):
