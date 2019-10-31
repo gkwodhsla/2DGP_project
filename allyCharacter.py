@@ -11,7 +11,7 @@ class Knight1(CharacterABC):
         self.y = y
         self.frame = 0
         self.hp = 100
-        self.offensePower = 100
+        self.offensePower = 1
         self.isBaseAttack = False
         if self.hpBarImage == None:
             self.hpBarImage = load_image("hpBar.png")

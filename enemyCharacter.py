@@ -11,7 +11,7 @@ class Ork1(CharacterABC):
         self.y = y
         self.frame = 0
         self.hp = 200
-        self.offensePower = 2
+        self.offensePower = 1
         self.isBaseAttack = False
         if self.hpBarImage == None:
             self.hpBarImage = load_image("enemyHpBar.png")
