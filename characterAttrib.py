@@ -2,6 +2,7 @@ from abc import *
 import camera
 import worldObjManager
 from pico2d import *
+import enum
 
 numOfAllyWalkImage = 6
 numOfAllyAttackImage = 7
@@ -16,6 +17,11 @@ knightWalkImageList = [[] for i in range(0, 3)]
 knightAttackImageList = [[] for i in range(0, 3)]
 knightDieImageList = [[] for i in range(0, 3)]
 
+class AllyCharacterIndex(enum.Enum):
+    knight1 = 0
+    knight2 = 1
+    knight3 = 2
+
 numOfEnemyIdleImage = 6
 numOfEnemyWalkImage = 6
 numOfEnemyAttackImage = 6
@@ -29,7 +35,10 @@ orkWalkImageList = [[] for i in range(0, 3)]
 orkAttackImageList = [[] for i in range(0, 3)]
 orkDieImageList = [[] for i in range(0, 3)]
 
-
+class EnemyCharacterIndex(enum.Enum):
+    ork1 = 0
+    ork2 = 1
+    ork3 = 2
 # 기사 걷는 이미지가 담긴 리스트.
 
 def loadKnightImage():
@@ -146,15 +155,15 @@ class IdleState:
     def draw(object, type, characterType):
         # type0 = ally type1 = enemy
         # characterType==0 knight1 , 1 knight2, 2 knight 3
-        if type == 0 and characterType == 0:
+        if type == 'ally':
             object.hpBarImage.draw(object.x - allyhpBarPos - camera.cameraXCoord, object.y + object.size / 2,
                                    object.hp / 2, allyhpBarHeigth)
-            knightIdleImageList[0][object.frame % numOfAllyIdleImage].draw(object.x - camera.cameraXCoord, object.y,
+            knightIdleImageList[characterType][object.frame % numOfAllyIdleImage].draw(object.x - camera.cameraXCoord, object.y,
                                                                            object.size,
                                                                            object.size)
         else:
             object.hpBarImage.draw(object.x + enemyhpBarPos - camera.cameraXCoord, object.y + object.size / 2, object.hp / 2, enemyhpBarHeigt)
-            orkIdleImageList[0][object.frame % numOfEnemyIdleImage].composite_draw(0, 'h', object.x - camera.cameraXCoord,
+            orkIdleImageList[characterType][object.frame % numOfEnemyIdleImage].composite_draw(0, 'h', object.x - camera.cameraXCoord,
                                                                             object.y,
                                                                             object.size, object.size)
 
@@ -171,7 +180,7 @@ class WalkState:
     @staticmethod
     def update(object, type):
         object.frame += 1
-        if type == 0:
+        if type == 'ally':
             object.x += 0.4
         else:
             object.x -= 0.4
@@ -180,15 +189,15 @@ class WalkState:
     def draw(object, type, characterType):
         # type0 = ally type1 = enemy
         # characterType==0 (knight1,ork1) and so forth...
-        if type == 0 and characterType == 0:
+        if type == 'ally':
             object.hpBarImage.draw(object.x - allyhpBarPos - camera.cameraXCoord, object.y + object.size / 2,
                                    object.hp / 2, allyhpBarHeigth)
-            knightWalkImageList[0][object.frame % numOfAllyWalkImage].draw(object.x - camera.cameraXCoord, object.y,
+            knightWalkImageList[characterType][object.frame % numOfAllyWalkImage].draw(object.x - camera.cameraXCoord, object.y,
                                                                            object.size,
                                                                            object.size)
-        elif type == 1 and characterType == 0:
+        else:
             object.hpBarImage.draw(object.x + enemyhpBarPos - camera.cameraXCoord, object.y + object.size / 2, object.hp / 2, enemyhpBarHeigt)
-            orkWalkImageList[0][object.frame % numOfEnemyWalkImage].composite_draw(0, 'h', object.x - camera.cameraXCoord,
+            orkWalkImageList[characterType][object.frame % numOfEnemyWalkImage].composite_draw(0, 'h', object.x - camera.cameraXCoord,
                                                                             object.y,
                                                                             object.size, object.size)
 
@@ -205,7 +214,7 @@ class AttackState:
     @staticmethod
     def update(object, type):
         object.frame += 1
-        if type == 0:
+        if type == 'ally':
             if object.frame % numOfAllyAttackImage == 0:
                 if not object.isBaseAttack:
                     worldObjManager.enemyCharacterList[0].hp -= object.offensePower
@@ -230,15 +239,15 @@ class AttackState:
     def draw(object, type, characterType):
         # type0 = ally type1 = enemy
         # characterType==0 knight1 , 1 knight2, 2 knight 3
-        if type == 0 and characterType == 0:
+        if type == 'ally':
             object.hpBarImage.draw(object.x - allyhpBarPos - camera.cameraXCoord, object.y + object.size / 2,
                                    object.hp / 2, allyhpBarHeigth)
-            knightAttackImageList[0][object.frame % numOfAllyAttackImage].draw(object.x - camera.cameraXCoord, object.y,
+            knightAttackImageList[characterType][object.frame % numOfAllyAttackImage].draw(object.x - camera.cameraXCoord, object.y,
                                                                                object.size,
                                                                                object.size)
-        elif type == 1 and characterType == 0:
+        else:
             object.hpBarImage.draw(object.x + enemyhpBarPos - camera.cameraXCoord, object.y + object.size / 2, object.hp / 2, enemyhpBarHeigt)
-            orkAttackImageList[0][object.frame % numOfEnemyAttackImage].composite_draw(0, 'h', object.x - camera.cameraXCoord,
+            orkAttackImageList[characterType][object.frame % numOfEnemyAttackImage].composite_draw(0, 'h', object.x - camera.cameraXCoord,
                                                                                 object.y,
                                                                                 object.size, object.size)
 
@@ -255,31 +264,27 @@ class DeathState:
     @staticmethod
     def update(object, type):
         object.frame += 1
-        if type == 0:
+        if type == 'ally':
             if object.frame == numOfAllyDieImage:
                 if len(worldObjManager.allyDeathList) > 0:
-                    worldObjManager.deleteObject(1, object)
-                # if (len(worldObjManager.allyCharacterList) > 0):
-                # worldObjManager.allyCharacterList[0].state = CharacterState.WALK
+                    worldObjManager.deleteObject('ally', object)
         else:
             if object.frame == numOfEnemyDieImage:
                 if (len(worldObjManager.enemyDeathList) > 0):
-                    worldObjManager.deleteObject(2, object)
-                #if (len(worldObjManager.enemyCharacterList) > 0):
-                    #worldObjManager.enemyCharacterList[0].state = CharacterState.WALK
+                    worldObjManager.deleteObject('enemy', object)
 
     @staticmethod
     def draw(object, type, characterType):
         # type0 = ally type1 = enemy
         # characterType==0 knight1 , 1 knight2, 2 knight 3
-        if type == 0 and characterType == 0:
+        if type == 'ally' and characterType == 0:
             object.hpBarImage.draw(object.x - allyhpBarPos - camera.cameraXCoord, object.y + object.size / 2,
                                    object.hp / 2, allyhpBarHeigth)
-            knightDieImageList[0][object.frame % numOfAllyDieImage].draw(object.x - camera.cameraXCoord, object.y,
+            knightDieImageList[characterType][object.frame % numOfAllyDieImage].draw(object.x - camera.cameraXCoord, object.y,
                                                                          object.size,
                                                                          object.size)
-        elif type ==1 and characterType == 0:
-            orkDieImageList[0][object.frame % numOfEnemyAttackImage].composite_draw(0, 'h', object.x - camera.cameraXCoord,
+        else:
+            orkDieImageList[characterType][object.frame % numOfEnemyAttackImage].composite_draw(0, 'h', object.x - camera.cameraXCoord,
                                                                              object.y,
                                                                              object.size, object.size)
 

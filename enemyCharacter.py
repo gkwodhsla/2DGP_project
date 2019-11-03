@@ -17,11 +17,11 @@ class Ork1(CharacterABC):
             self.hpBarImage = load_image("effectImages\\enemyHpBar.png")
 
     def draw(self):
-        self.state.draw(self, 1, 0)
+        self.state.draw(self, 'enemy', EnemyCharacterIndex.ork1.value)
 
 
     def update(self):
-        self.state.update(self, 1)
+        self.state.update(self, 'enemy')
         if self.hp <= 0:
             return True
 

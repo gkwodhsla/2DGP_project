@@ -65,9 +65,9 @@ def update():
 
 
 def deleteObject(type, object):
-    if type == 1:
+    if type == 'ally':
         allyDeathList.remove(object)
-    elif type == 2:
+    elif type == 'enemy':
         enemyDeathList.remove(object)
     del object
 

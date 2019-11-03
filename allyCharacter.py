@@ -17,11 +17,11 @@ class Knight1(CharacterABC):
             self.hpBarImage = load_image("effectImages\\hpBar.png")
 
     def draw(self):
-        self.state.draw(self, 0, 0)
+        self.state.draw(self, 'ally', AllyCharacterIndex.knight1.value)
 
 
     def update(self):
-        self.state.update(self, 0)
+        self.state.update(self, 'ally')
         if self.hp <= 0:
             return True
 
