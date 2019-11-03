@@ -14,13 +14,11 @@ class Ork1(CharacterABC):
         self.offensePower = 1
         self.isBaseAttack = False
         if self.hpBarImage == None:
-            self.hpBarImage = load_image("enemyHpBar.png")
+            self.hpBarImage = load_image("effectImages\\enemyHpBar.png")
 
     def draw(self):
         self.state.draw(self, 1, 0)
 
-    def move(self):
-        pass
 
     def update(self):
         self.state.update(self, 1)
@@ -29,13 +27,13 @@ class Ork1(CharacterABC):
 
         return False
 
-    def checkCollision(self, frontCharacterXpos):
+    def checkCollisionWithAlly(self, frontCharacterXpos):
         if self.x < frontCharacterXpos + self.size:
             self.state = IdleState
         else:
             self.state = WalkState
 
-    def checkEnemyMeet(self, enemyXpos):
+    def checkCollisionWithEnemy(self, enemyXpos):
         if self.x < enemyXpos + self.size:
             if self.state != AttackState and worldObjManager.allyCharacterList[0].hp > 0:
                 self.state = AttackState
@@ -43,7 +41,7 @@ class Ork1(CharacterABC):
         else:
             self.state=WalkState
 
-    def checkBaseCollision(self):
+    def checkCollisionWithBase(self):
         if self.x < worldObjManager.baseList[0].x + worldObjManager.baseList[0].size / 2:
             self.state = AttackState
             self.isBaseAttack = True

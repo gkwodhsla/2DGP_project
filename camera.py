@@ -1,4 +1,4 @@
-#최초에 이 파이썬 파일에서 캔버스를 엽니다.
+#camera class this file containing backgroundImage.
 
 from pico2d import *
 import random

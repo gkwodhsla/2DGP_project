@@ -12,9 +12,9 @@ class base:
         self.hp = 500
         self.hpBarHeigth = 10
         if(isAllyBase):
-            self.hpBarImage=camera.load_image("hpBar.png")
+            self.hpBarImage=camera.load_image("effectImages\\hpBar.png")
         else:
-            self.hpBarImage=camera.load_image("enemyHpBar.png")
+            self.hpBarImage=camera.load_image("effectImages\\enemyHpBar.png")
 
     def draw(self):
         if self.isAllyBase:

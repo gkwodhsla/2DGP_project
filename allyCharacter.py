@@ -14,13 +14,11 @@ class Knight1(CharacterABC):
         self.offensePower = 1
         self.isBaseAttack = False
         if self.hpBarImage == None:
-            self.hpBarImage = load_image("hpBar.png")
+            self.hpBarImage = load_image("effectImages\\hpBar.png")
 
     def draw(self):
         self.state.draw(self, 0, 0)
 
-    def move(self):
-        pass
 
     def update(self):
         self.state.update(self, 0)
@@ -29,13 +27,13 @@ class Knight1(CharacterABC):
 
         return False
 
-    def checkCollision(self, frontCharacterXpos):
+    def checkCollisionWithAlly(self, frontCharacterXpos):
         if self.x + self.size > frontCharacterXpos:
             self.state = IdleState
         else:
             self.state = WalkState
 
-    def checkEnemyMeet(self, enemyXpos):
+    def checkCollisionWithEnemy(self, enemyXpos):
         if self.x + self.size > enemyXpos:
             if self.state != AttackState and worldObjManager.enemyCharacterList[0].hp > 0:
                 self.state = AttackState
@@ -43,7 +41,7 @@ class Knight1(CharacterABC):
         else:
             self.state = WalkState
 
-    def checkBaseCollision(self):
+    def checkCollisionWithBase(self):
         if self.x + self.size > worldObjManager.baseList[1].x:
             self.state = AttackState
             self.isBaseAttack = True
