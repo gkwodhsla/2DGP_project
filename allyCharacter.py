@@ -5,11 +5,17 @@ import worldObjManager
 class Knight1(CharacterABC):
     state = WalkState
     hpBarImage = None
+    timePerACtion = 0.8  # 초당 0.8번의 행동을한다.
+    actionPerTime = 1.0 / timePerACtion
+    framesPerActionIdle = 6
+    framesPerActionWalk = 6
+    framesPerActionAttack = 7
+    framesPerActionDeath = 6
 
     def __init__(self, x, y):
         self.x = x
         self.y = y
-        self.frame = 0
+        self.frame = 0.0
         self.hp = 100
         self.offensePower = 1
         self.isBaseAttack = False

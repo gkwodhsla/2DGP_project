@@ -5,11 +5,16 @@ import worldObjManager
 class Ork1(CharacterABC):
     state = WalkState
     hpBarImage = None
-
+    timePerACtion = 0.5  # 초당 0.5번의 행동을한다.
+    actionPerTime = 1.0 / timePerACtion
+    framesPerActionIdle = 6
+    framesPerActionWalk = 6
+    framesPerActionAttack = 6
+    framesPerActionDeath = 6
     def __init__(self, x, y):
         self.x = x
         self.y = y
-        self.frame = 0
+        self.frame = 0.0
         self.hp = 200
         self.offensePower = 1
         self.isBaseAttack = False
