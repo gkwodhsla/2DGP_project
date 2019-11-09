@@ -65,6 +65,7 @@ def update():
         enemyDeathList[i].update()
 
     for cannon in cannonList:
+        cannon.checkCollsion()
         cannon.update()
 
 def deleteObject(type, object):
@@ -72,6 +73,8 @@ def deleteObject(type, object):
         allyDeathList.remove(object)
     elif type == 'enemy':
         enemyDeathList.remove(object)
+    elif type == 'cannon':
+        cannonList.remove(object)
     del object
 
 
