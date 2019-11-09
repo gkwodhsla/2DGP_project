@@ -7,6 +7,7 @@ import allyCharacter
 import enemyCharacter
 import gameFramework
 import characterAttrib
+import cannon
 
 allyBase = None
 enemyBase = None
@@ -53,6 +54,8 @@ def handle_events():
                 worldObjManager.addObject(allyCharacter.Knight1(300, 100), 1)
             elif event.key == SDLK_1:
                 worldObjManager.addObject(enemyCharacter.Ork1(1600, 100), 2)
+            elif event.key  == SDLK_SPACE:
+                worldObjManager.addObject(cannon.Cannon(),3)
 
 
 def update():

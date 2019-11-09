@@ -1,13 +1,13 @@
 # 이 객체에서 worldObject들을 관리합니다.
 
-# type0 = base , type1 = allyCharacter , type2 = enemyCharacter
+# type0 = base , type1 = allyCharacter , type2 = enemyCharacter, type3 = cannonBall
 # objects in each deathList will be destroy when its done its job.
 baseList = []
 allyCharacterList = []
 enemyCharacterList = []
 allyDeathList = []
 enemyDeathList = []
-
+cannonList = []
 
 # add object according to its own type
 def addObject(object, type):
@@ -17,7 +17,8 @@ def addObject(object, type):
         allyCharacterList.append(object)
     elif type == 2:
         enemyCharacterList.append(object)
-
+    elif type == 3:
+        cannonList.append(object)
 
 def update():
     # The general game logic update loop return value is boolean and if this value is TRUE then this object moved to deathlist
@@ -63,6 +64,8 @@ def update():
     for i in range(0, len(enemyDeathList)):
         enemyDeathList[i].update()
 
+    for cannon in cannonList:
+        cannon.update()
 
 def deleteObject(type, object):
     if type == 'ally':
@@ -93,6 +96,8 @@ def drawObject():
     for i in range(0, len(enemyDeathList)):
         enemyDeathList[i].draw()
 
+    for cannon in cannonList:
+        cannon.draw()
 
 # delete all objects when game is over.
 def deleteAllObjects():
