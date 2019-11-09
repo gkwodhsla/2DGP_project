@@ -3,6 +3,7 @@ import camera
 import worldObjManager
 from pico2d import *
 import enum
+import gameFramework
 
 numOfAllyWalkImage = 6
 numOfAllyAttackImage = 7
@@ -21,6 +22,13 @@ class AllyCharacterIndex(enum.Enum):
     knight1 = 0
     knight2 = 1
     knight3 = 2
+
+pixelPerMeter = (10.0/0.2) #10pixel 20cm
+runSpeedKmph = 10
+runSpeedMpm = (runSpeedKmph*1000.0/60.0)
+runSpeedMps = (runSpeedMpm/60.0)
+runSpeedPps = (runSpeedMps*pixelPerMeter)
+velocity = runSpeedPps
 
 numOfEnemyIdleImage = 6
 numOfEnemyWalkImage = 6
@@ -181,9 +189,9 @@ class WalkState:
     def update(object, type):
         object.frame += 1
         if type == 'ally':
-            object.x += 0.4
+            object.x += velocity*gameFramework.frameTime
         else:
-            object.x -= 0.4
+            object.x -= velocity*gameFramework.frameTime
 
     @staticmethod
     def draw(object, type, characterType):
