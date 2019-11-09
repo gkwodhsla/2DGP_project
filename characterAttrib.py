@@ -91,41 +91,37 @@ def loadOrkImage():
 
 
 def exit():
-    for i in range(0, numOfAllyWalkImage + 1):
-        del (knightWalkImageList[0])
-        # del(knightWalkImageList[1])
-        # del(knightWalkImageList[2])
-    for i in range(0, numOfAllyAttackImage + 1):
-        del (knightAttackImageList[0])
-        # del(knightAttackImageList[1])
-        # del(knightAttackImageList[2])
-    for i in range(0, numOfAllyDieImage + 1):
-        del (knightDieImageList[0])
-        # del(knightDieImageList[0])
-        # del(knightDieImageList[0])
-    for i in range(0, numOfAllyIdleImage + 1):
-        del (knightIdleImageList[0])
-        # del(knightIdleImageList[1])
-        # del(knightIdleImageList[2])
+    del (knightWalkImageList[0])
+    # del(knightWalkImageList[1])
+    # del(knightWalkImageList[2])
 
-    for i in range(0, numOfEnemyWalkImage + 1):
-        del (orkWalkImageList[0])
-        # del(orkWalkImageList[1])
-        # del(orkWalkImageList[2])
-    for i in range(0, numOfEnemyAttackImage + 1):
-        del (orkAttackImageList[0])
-        # del(orkAttackImageList[1])
-        # del(orkAttackImageList[2])
+    del (knightAttackImageList[0])
+    # del(knightAttackImageList[1])
+    # del(knightAttackImageList[2])
 
-    for i in range(0, numOfEnemyDieImage + 1):
-        del (orkDieImageList[0])
-        # del(orkDieImageList[1])
-        # del(orkDieImageList[2])
+    del (knightDieImageList[0])
+    # del(knightDieImageList[0])
+    # del(knightDieImageList[0])
 
-    for i in range(0, numOfEnemyIdleImage + 1):
-        del (orkIdleImageList[0])
-        # del(knightIdleImageList[1])
-        # del(knightIdleImageList[2])
+    del (knightIdleImageList[0])
+    # del(knightIdleImageList[1])
+    # del(knightIdleImageList[2])
+
+    del (orkWalkImageList[0])
+    # del(orkWalkImageList[1])
+    # del(orkWalkImageList[2])
+
+    del (orkAttackImageList[0])
+    # del(orkAttackImageList[1])
+    # del(orkAttackImageList[2])
+
+    del (orkDieImageList[0])
+    # del(orkDieImageList[1])
+    # del(orkDieImageList[2])
+
+    del (orkIdleImageList[0])
+    # del(knightIdleImageList[1])
+    # del(knightIdleImageList[2])
 
 
 class CharacterABC(metaclass=ABCMeta):

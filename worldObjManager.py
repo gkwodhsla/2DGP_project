@@ -61,11 +61,11 @@ def update():
     for i in range(0, len(allyDeathList)):
         allyDeathList[i].update()
 
-    for i in range(0, len(enemyDeathList)):
-        enemyDeathList[i].update()
+    for enemy in enemyDeathList:
+        enemy.update()
 
     for cannon in cannonList:
-        cannon.checkCollsion()
+        cannon.checkCollision()
         cannon.update()
 
 def deleteObject(type, object):

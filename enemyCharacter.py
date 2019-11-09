@@ -18,6 +18,10 @@ class Ork1(CharacterABC):
         self.hp = 200
         self.offensePower = 1
         self.isBaseAttack = False
+        self.right = self.x + self.size / 2
+        self.left = self.x - self.size / 2
+        self.top = self.y + self.size / 2
+        self.bottom = self.y - self.size / 2
         if self.hpBarImage == None:
             self.hpBarImage = load_image("effectImages\\enemyHpBar.png")
 
@@ -26,6 +30,10 @@ class Ork1(CharacterABC):
 
 
     def update(self):
+        self.right = self.x + self.size / 2
+        self.left = self.x - self.size / 2
+        self.top = self.y + self.size / 2
+        self.bottom = self.y - self.size / 2
         self.state.update(self, 'enemy')
         if self.hp <= 0:
             return True
@@ -50,6 +58,8 @@ class Ork1(CharacterABC):
         if self.x < worldObjManager.baseList[0].x + worldObjManager.baseList[0].size / 2:
             self.state = AttackState
             self.isBaseAttack = True
+        else:
+            self.state=WalkState
 
     def changeState(self):
         pass
