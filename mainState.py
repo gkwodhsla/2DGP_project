@@ -8,13 +8,15 @@ import enemyCharacter
 import gameFramework
 import characterAttrib
 import cannon
+import GUI
 
 allyBase = None
 enemyBase = None
-
+coin = None
 
 def enter():
     global allyBase, enemyBase
+    global coin
     camera.enter()
     allyCharacter.loadKnightImage()
     enemyCharacter.loadOrkImage()
@@ -22,14 +24,17 @@ def enter():
     allyBase = base("base\\allyBase.png", 200, 150, True)
     enemyBase = base("base\\enemyBase.png", camera.backgroundImage.w - 200, 150, False)
 
+    coin = GUI.Coin()
+
     worldObjManager.addObject(allyBase, 0)
     worldObjManager.addObject(enemyBase, 0)
 
 
 def exit():
-    global allyBase, enemyBase
-    del (allyBase)
-    del (enemyBase)
+    global allyBase, enemyBase, coin
+    del allyBase
+    del enemyBase
+    del coin
     camera.exit()
     characterAttrib.exit()
     worldObjManager.deleteAllObjects()
@@ -59,12 +64,15 @@ def handle_events():
 
 
 def update():
+    global coin
     worldObjManager.update()
     camera.update()
-
+    coin.update()
 
 def draw():
+    global coin
     clear_canvas()
     camera.draw()
+    coin.draw()
     worldObjManager.drawObject()
     update_canvas()
