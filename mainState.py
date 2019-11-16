@@ -50,12 +50,17 @@ def resume():
 
 
 def handle_events():
+    global spearRespawnButton
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
             gameFramework.running = False
         elif event.type == SDL_MOUSEMOTION:
             camera.handleEvent(event.x)
+            spearRespawnButton.handleEvent(event.x,camera.windowHEIGHT-event.y-1,False)
+        elif event.type == SDL_MOUSEBUTTONDOWN:
+            spearRespawnButton.handleEvent(event.x, camera.windowHEIGHT - event.y - 1, True)
+
         elif event.type == SDL_KEYDOWN:
             if event.key == SDLK_0:
                 worldObjManager.addObject(allyCharacter.Knight1(300, 100), 1)

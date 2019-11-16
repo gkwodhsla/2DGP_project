@@ -29,9 +29,9 @@ def draw():
 
 def handleEvent(mouseX):
     global moveLeft, moveRight
-    if 0 < mouseX < 150:
+    if 0 < mouseX < 100:
         moveLeft = True
-    elif windowWIDTH - 150 < mouseX < windowWIDTH:
+    elif windowWIDTH - 100 < mouseX < windowWIDTH:
         moveRight = True
     else:
         moveLeft = False
