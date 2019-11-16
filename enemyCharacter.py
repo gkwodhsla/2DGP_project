@@ -58,8 +58,7 @@ class Ork1(CharacterABC):
         if self.x < worldObjManager.baseList[0].x + worldObjManager.baseList[0].size / 2:
             self.state = AttackState
             self.isBaseAttack = True
-        else:
-            self.state=WalkState
+
 
     def changeState(self):
         pass

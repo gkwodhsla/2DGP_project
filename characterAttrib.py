@@ -223,6 +223,7 @@ class AttackState:
     def update(object, type):
         object.frame = (object.frame + object.framesPerActionAttack * object.actionPerTime * gameFramework.frameTime) % object.framesPerActionAttack
         if type == 'ally':
+            print(object.frame)
             if int(object.frame) % object.framesPerActionAttack == 0:
                 if not object.isBaseAttack:
                     worldObjManager.enemyCharacterList[0].hp -= object.offensePower

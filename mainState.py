@@ -34,10 +34,11 @@ def enter():
 
 
 def exit():
-    global allyBase, enemyBase, coin
+    global allyBase, enemyBase, coin, spearRespawnButton
     del allyBase
     del enemyBase
     del coin
+    del spearRespawnButton
     camera.exit()
     characterAttrib.exit()
     worldObjManager.deleteAllObjects()
@@ -66,11 +67,12 @@ def handle_events():
             elif event.key == SDLK_1:
                 worldObjManager.addObject(enemyCharacter.Ork1(1600, 100), 2)
             elif event.key == SDLK_SPACE:
-                worldObjManager.addObject(cannon.Cannon(), 3)
+                for i in range(2):
+                    worldObjManager.addObject(cannon.Cannon(), 3)
 
 
 def update():
-    global coin,spearRespawnButton
+    global coin, spearRespawnButton
     worldObjManager.update()
     camera.update()
     coin.update()

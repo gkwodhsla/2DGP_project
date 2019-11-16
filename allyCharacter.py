@@ -51,8 +51,6 @@ class Knight1(CharacterABC):
         if self.x + self.size > worldObjManager.baseList[1].x:
             self.state = AttackState
             self.isBaseAttack = True
-        else:
-            self.state=WalkState
 
     def changeState(self):
         pass
