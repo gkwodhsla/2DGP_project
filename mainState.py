@@ -13,10 +13,11 @@ import GUI
 allyBase = None
 enemyBase = None
 coin = None
+spearRespawnButton = None
 
 def enter():
     global allyBase, enemyBase
-    global coin
+    global coin, spearRespawnButton
     camera.enter()
     allyCharacter.loadKnightImage()
     enemyCharacter.loadOrkImage()
@@ -25,6 +26,7 @@ def enter():
     enemyBase = base("base\\enemyBase.png", camera.backgroundImage.w - 200, 150, False)
 
     coin = GUI.Coin()
+    spearRespawnButton=GUI.SpearmanRespawnButton()
 
     worldObjManager.addObject(allyBase, 0)
     worldObjManager.addObject(enemyBase, 0)
@@ -74,5 +76,6 @@ def draw():
     clear_canvas()
     camera.draw()
     coin.draw()
+    spearRespawnButton.draw()
     worldObjManager.drawObject()
     update_canvas()
