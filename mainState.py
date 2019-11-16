@@ -15,6 +15,7 @@ enemyBase = None
 coin = None
 spearRespawnButton = None
 
+
 def enter():
     global allyBase, enemyBase
     global coin, spearRespawnButton
@@ -26,7 +27,7 @@ def enter():
     enemyBase = base("base\\enemyBase.png", camera.backgroundImage.w - 200, 150, False)
 
     coin = GUI.Coin()
-    spearRespawnButton=GUI.SpearmanRespawnButton()
+    spearRespawnButton = GUI.SpearmanRespawnButton()
 
     worldObjManager.addObject(allyBase, 0)
     worldObjManager.addObject(enemyBase, 0)
@@ -41,6 +42,7 @@ def exit():
     characterAttrib.exit()
     worldObjManager.deleteAllObjects()
 
+
 def pause():
     pass
 
@@ -50,31 +52,30 @@ def resume():
 
 
 def handle_events():
-    global spearRespawnButton
+    global spearRespawnButton,coin
     events = get_events()
     for event in events:
+        spearRespawnButton.handleEvent(event,coin)
         if event.type == SDL_QUIT:
             gameFramework.running = False
         elif event.type == SDL_MOUSEMOTION:
             camera.handleEvent(event.x)
-            spearRespawnButton.handleEvent(event.x,camera.windowHEIGHT-event.y-1,False)
-        elif event.type == SDL_MOUSEBUTTONDOWN:
-            spearRespawnButton.handleEvent(event.x, camera.windowHEIGHT - event.y - 1, True)
-
         elif event.type == SDL_KEYDOWN:
             if event.key == SDLK_0:
                 worldObjManager.addObject(allyCharacter.Knight1(300, 100), 1)
             elif event.key == SDLK_1:
                 worldObjManager.addObject(enemyCharacter.Ork1(1600, 100), 2)
-            elif event.key  == SDLK_SPACE:
-                worldObjManager.addObject(cannon.Cannon(),3)
+            elif event.key == SDLK_SPACE:
+                worldObjManager.addObject(cannon.Cannon(), 3)
 
 
 def update():
-    global coin
+    global coin,spearRespawnButton
     worldObjManager.update()
     camera.update()
     coin.update()
+    spearRespawnButton.update()
+
 
 def draw():
     global coin

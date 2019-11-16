@@ -1,15 +1,14 @@
 import camera
 import gameFramework
 import allyCharacter
-
+import worldObjManager
 
 class Coin:
     image = None
-
+    currentMoney = 0
     def __init__(self):
         self.x = camera.windowWIDTH - 100
         self.y = camera.windowHEIGHT - 70
-        self.currentMoney = 0
         self.size = 70
         self.updateTime = 0.0
         self.font = camera.load_font('textfile\\Sofija.TTF', 35)
@@ -72,22 +71,34 @@ class SpearmanRespawnButton:
             self.font.draw(self.x - 20, self.y, '(%3.1f)' % self.currentRespawnTime, (255, 0, 0))
         self.font.draw(self.x - 20, self.y - 50, '%d' % self.cost, (255, 255, 255))
 
-    def handleEvent(self, mouseXpos, mouseYpos, isClick):
-        if (not isClick and self.x - self.size / 2 <= mouseXpos <= self.x + self.size / 2
-                and self.y - self.size / 2 <= mouseYpos <= self.y + self.size / 2):
-            self.state = MOUSE_ON
-        else:
-            self.state = MOUSE_OUT
-        if (isClick and self.x - self.size / 2 <= mouseXpos <= self.x + self.size / 2
-                and self.y - self.size / 2 <= mouseYpos <= self.y + self.size / 2):
-            self.state = MOUSE_CLICK
-        if not isClick and self.state == MOUSE_CLICK:
-            self.state = WAIT
+    def handleEvent(self, event, coin):
+        if self.state is not WAIT:
+            if event.type == camera.SDL_MOUSEMOTION:
+                if (self.x - self.size / 2 <= event.x <= self.x + self.size / 2
+                        and self.y - self.size / 2 <= camera.windowHEIGHT - event.y - 1 <= self.y + self.size / 2):
+                    self.state = MOUSE_ON
+                else:
+                    self.state = MOUSE_OUT
+            elif event.type == camera.SDL_MOUSEBUTTONDOWN:
+                if (self.state is MOUSE_ON and self.x - self.size / 2 <= event.x <= self.x + self.size / 2
+                        and self.y - self.size / 2 <= camera.windowHEIGHT - event.y - 1 <= self.y + self.size / 2):
+                    self.state = MOUSE_CLICK
+            elif event.type == camera.SDL_MOUSEBUTTONUP:
+                if (self.state is MOUSE_CLICK and self.x - self.size / 2 <= event.x <= self.x + self.size / 2
+                        and self.y - self.size / 2 <= camera.windowHEIGHT - event.y - 1 <= self.y + self.size / 2):
+                    if self.makeObjectAndReturn(coin):
+                        self.state = WAIT
+                        self.currentRespawnTime = self.maxRespawnTime
+                    else:
+                        self.state = MOUSE_OUT
 
-    def makeObjectAndReturn(self):
-        # 오브젝트의 현재 돈을 알아낸뒤 캐릭터를 생성할수있으면 돈을 차감하고 캐릭터 객체를 생성한다.
-        return allyCharacter.Knight1(300, 100)
 
+    def makeObjectAndReturn(self,coin):
+        if coin.currentMoney-self.cost >= 0:
+            coin.currentMoney -= self.cost
+            worldObjManager.addObject(allyCharacter.Knight1(300, 100), 1)
+            return True
+        return False
 
 class AxemanRespawnButton:
     pass
