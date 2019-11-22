@@ -80,7 +80,7 @@ class SpearmanRespawnButton:
                 else:
                     self.state = MOUSE_OUT
             elif event.type == camera.SDL_MOUSEBUTTONDOWN:
-                if (self.state is MOUSE_ON and self.x - self.size / 2 <= event.x <= self.x + self.size / 2
+                if (self.x - self.size / 2 <= event.x <= self.x + self.size / 2
                         and self.y - self.size / 2 <= camera.windowHEIGHT - event.y - 1 <= self.y + self.size / 2):
                     self.state = MOUSE_CLICK
             elif event.type == camera.SDL_MOUSEBUTTONUP:

@@ -234,7 +234,7 @@ class AttackState:
                 else:
                     worldObjManager.baseList[1].hp -= object.offensePower
         else:
-            if int(object.frame) % object.framesPerActionAttack == 0:
+            if int(object.frame) % object.framesPerActionAttack == 4:
                 if not object.isBaseAttack:
                     worldObjManager.allyCharacterList[0].hp -= object.offensePower
                     if worldObjManager.allyCharacterList[0].hp <= 0:

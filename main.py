@@ -1,8 +1,9 @@
 import gameFramework
 import pico2d
 import mainState
+import startState
 
 if __name__=='__main__':
     pico2d.open_canvas()
-    gameFramework.run(mainState)
+    gameFramework.run(startState)
     pico2d.close_canvas()
