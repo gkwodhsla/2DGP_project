@@ -11,6 +11,7 @@ class Ork1(CharacterABC):
     framesPerActionWalk = 6
     framesPerActionAttack = 6
     framesPerActionDeath = 6
+
     def __init__(self, x, y):
         self.x = x
         self.y = y
@@ -27,7 +28,6 @@ class Ork1(CharacterABC):
 
     def draw(self):
         self.state.draw(self, 'enemy', EnemyCharacterIndex.ork1.value)
-
 
     def update(self):
         self.right = self.x + self.size / 2
@@ -52,13 +52,14 @@ class Ork1(CharacterABC):
                 self.state = AttackState
                 self.frame = 0
         else:
-            self.state=WalkState
+            self.state = WalkState
 
     def checkCollisionWithBase(self):
         if self.x < worldObjManager.baseList[0].x + worldObjManager.baseList[0].size / 2:
             self.state = AttackState
             self.isBaseAttack = True
-
+        else:
+            self.state = WalkState
 
     def changeState(self):
         pass

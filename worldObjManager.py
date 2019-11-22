@@ -30,12 +30,13 @@ def update():
             allyDeathList.append(allyCharacterList.pop(i))
             break
 
-    if (len(allyCharacterList) > 0):
-        allyCharacterList[0].checkCollisionWithBase()
 
     # Checking Collision with enemy unit
     if (len(allyCharacterList) > 0 and len(enemyCharacterList) > 0):
         allyCharacterList[0].checkCollisionWithEnemy(enemyCharacterList[0].x)
+
+    elif (len(allyCharacterList) > 0):
+        allyCharacterList[0].checkCollisionWithBase()
 
     # Checking Collision with ally unit
     for i in range(1, len(allyCharacterList)):
@@ -50,11 +51,12 @@ def update():
             enemyDeathList.append(enemyCharacterList.pop(i))
             break
 
-    if (len(enemyCharacterList) > 0):
-        enemyCharacterList[0].checkCollisionWithBase()
-
     if (len(allyCharacterList) > 0 and len(enemyCharacterList) > 0):
         enemyCharacterList[0].checkCollisionWithEnemy(allyCharacterList[0].x)
+
+    elif (len(enemyCharacterList) > 0):
+        enemyCharacterList[0].checkCollisionWithBase()
+
 
     for i in range(1, len(enemyCharacterList)):
         enemyCharacterList[i].checkCollisionWithAlly(enemyCharacterList[i - 1].x)

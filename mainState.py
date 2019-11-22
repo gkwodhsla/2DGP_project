@@ -18,13 +18,14 @@ font = None
 cannonPrepareTime = 7.0
 curCannonPrepareTime = 0.0
 
+
 def enter():
     global allyBase, enemyBase
     global coin, spearRespawnButton
     global font
     camera.enter()
-    #allyCharacter.loadKnightImage()
-    #enemyCharacter.loadOrkImage()
+    # allyCharacter.loadKnightImage()
+    # enemyCharacter.loadOrkImage()
 
     # fourth type is base type True: ally
     allyBase = base("base\\allyBase.png", 200, 150, True)
@@ -38,12 +39,13 @@ def enter():
 
     font = load_font('textfile\\Sofija.TTF', 25)
 
+
 def exit():
     global allyBase, enemyBase, coin, spearRespawnButton
     del allyBase
     del enemyBase
-    #del coin
-    #del spearRespawnButton
+    # del coin
+    # del spearRespawnButton
     camera.exit()
     characterAttrib.exit()
     worldObjManager.deleteAllObjects()
@@ -58,10 +60,10 @@ def resume():
 
 
 def handle_events():
-    global spearRespawnButton,coin,curCannonPrepareTime
+    global spearRespawnButton, coin, curCannonPrepareTime
     events = get_events()
     for event in events:
-        spearRespawnButton.handleEvent(event,coin)
+        spearRespawnButton.handleEvent(event, coin)
         if event.type == SDL_QUIT:
             gameFramework.running = False
         elif event.type == SDL_MOUSEMOTION:
@@ -79,13 +81,14 @@ def handle_events():
 
 
 def update():
-    global spearRespawnButton,curCannonPrepareTime
+    global spearRespawnButton, curCannonPrepareTime
     worldObjManager.update()
     camera.update()
     coin.update()
     spearRespawnButton.update()
-    if curCannonPrepareTime>=0.0:
+    if curCannonPrepareTime >= 0.0:
         curCannonPrepareTime -= gameFramework.frameTime
+
 
 def draw():
     clear_canvas()
@@ -93,8 +96,8 @@ def draw():
     coin.draw()
     spearRespawnButton.draw()
     worldObjManager.drawObject()
-    if curCannonPrepareTime <=0:
-        font.draw(300, 50, 'cannon is ready press spacebar!!!' , (255, 255, 255))
+    if curCannonPrepareTime <= 0:
+        font.draw(300, 50, 'cannon is ready press spacebar!!!', (255, 255, 255))
     else:
-        font.draw(300, 50 ,'cannon is preparing plz wait...',(255,255,255))
+        font.draw(300, 50, 'cannon is preparing plz wait...', (255, 255, 255))
     update_canvas()
