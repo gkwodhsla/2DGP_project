@@ -43,7 +43,7 @@ def update():
         characterAttrib.loadKnightImage()
         i += 1
     elif i == 3:
-        gameFramework.change_state(mainState)
+        gameFramework.change_state(titleState)
 
 
 def draw():
