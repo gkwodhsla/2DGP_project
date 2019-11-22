@@ -47,7 +47,7 @@ class Cannon:
         self.right=self.x+self.size/2
         self.left=self.x-self.size/2
         self.top=self.y+self.size/2
-        self.bottom=self.y-self.size/2
+        self.bottom=self.y-self.size/2 - 10
         self.degree+=5
         if self.isExplosion:
             self.frame = (self.frame + self.framesPerAction * self.actionPerTime * gameFramework.frameTime) % self.framesPerAction

@@ -19,7 +19,7 @@ class Coin:
         self.updateTime += gameFramework.frameTime
         if self.updateTime >= 2.0:
             self.updateTime = 0.0
-            self.currentMoney += 3
+            self.currentMoney += 10
 
     def draw(self):
         self.image.draw(self.x, self.y, self.size, self.size)

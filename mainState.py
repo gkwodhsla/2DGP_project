@@ -14,11 +14,14 @@ allyBase = None
 enemyBase = None
 coin = None
 spearRespawnButton = None
-
+font = None
+cannonPrepareTime = 7.0
+curCannonPrepareTime = 0.0
 
 def enter():
     global allyBase, enemyBase
     global coin, spearRespawnButton
+    global font
     camera.enter()
     #allyCharacter.loadKnightImage()
     #enemyCharacter.loadOrkImage()
@@ -33,6 +36,7 @@ def enter():
     worldObjManager.addObject(allyBase, 0)
     worldObjManager.addObject(enemyBase, 0)
 
+    font = load_font('textfile\\Sofija.TTF', 25)
 
 def exit():
     global allyBase, enemyBase, coin, spearRespawnButton
@@ -54,7 +58,7 @@ def resume():
 
 
 def handle_events():
-    global spearRespawnButton,coin
+    global spearRespawnButton,coin,curCannonPrepareTime
     events = get_events()
     for event in events:
         spearRespawnButton.handleEvent(event,coin)
@@ -68,17 +72,20 @@ def handle_events():
             elif event.key == SDLK_1:
                 worldObjManager.addObject(enemyCharacter.Ork1(1600, 100), 2)
             elif event.key == SDLK_SPACE:
-                for i in range(2):
-                    worldObjManager.addObject(cannon.Cannon(), 3)
+                if curCannonPrepareTime <= 0.0:
+                    for i in range(4):
+                        worldObjManager.addObject(cannon.Cannon(), 3)
+                    curCannonPrepareTime = cannonPrepareTime
 
 
 def update():
-    global spearRespawnButton
+    global spearRespawnButton,curCannonPrepareTime
     worldObjManager.update()
     camera.update()
     coin.update()
     spearRespawnButton.update()
-
+    if curCannonPrepareTime>=0.0:
+        curCannonPrepareTime -= gameFramework.frameTime
 
 def draw():
     clear_canvas()
@@ -86,4 +93,8 @@ def draw():
     coin.draw()
     spearRespawnButton.draw()
     worldObjManager.drawObject()
+    if curCannonPrepareTime <=0:
+        font.draw(300, 50, 'cannon is ready press spacebar!!!' , (255, 255, 255))
+    else:
+        font.draw(300, 50 ,'cannon is preparing plz wait...',(255,255,255))
     update_canvas()
