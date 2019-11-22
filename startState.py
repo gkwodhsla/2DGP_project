@@ -1,7 +1,7 @@
 from pico2d import *
 import characterAttrib
 import gameFramework
-import mainState
+import titleState
 font = None
 backGroundImage = None
 percentage = 0
