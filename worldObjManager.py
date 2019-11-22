@@ -9,6 +9,7 @@ allyDeathList = []
 enemyDeathList = []
 cannonList = []
 
+
 # add object according to its own type
 def addObject(object, type):
     if type == 0:
@@ -19,6 +20,7 @@ def addObject(object, type):
         enemyCharacterList.append(object)
     elif type == 3:
         cannonList.append(object)
+
 
 def update():
     # The general game logic update loop return value is boolean and if this value is TRUE then this object moved to deathlist
@@ -39,9 +41,9 @@ def update():
     for i in range(1, len(allyCharacterList)):
         allyCharacterList[i].checkCollisionWithAlly(allyCharacterList[i - 1].x)
 
-    #so far allyCharacter updating code.
-# ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-    #same as allyCharacter updating code but just using diffent list.
+    # so far allyCharacter updating code.
+    # ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+    # same as allyCharacter updating code but just using diffent list.
     for i in range(0, len(enemyCharacterList)):
         if (enemyCharacterList[i].update()):
             enemyCharacterList[i].frame = 0
@@ -57,7 +59,7 @@ def update():
     for i in range(1, len(enemyCharacterList)):
         enemyCharacterList[i].checkCollisionWithAlly(enemyCharacterList[i - 1].x)
 
-    #for updating dying animation.
+    # for updating dying animation.
     for i in range(0, len(allyDeathList)):
         allyDeathList[i].update()
 
@@ -67,6 +69,7 @@ def update():
     for cannon in cannonList:
         cannon.checkCollision()
         cannon.update()
+
 
 def deleteObject(type, object):
     if type == 'ally':
@@ -102,10 +105,11 @@ def drawObject():
     for cannon in cannonList:
         cannon.draw()
 
+
 # delete all objects when game is over.
 def deleteAllObjects():
-    for i in range(0, len(allyCharacterList)):
-        del (allyCharacterList[i])
+    for obj in allyCharacterList:
+        del obj
 
-    for i in range(0, len(enemyCharacterList)):
-        del (enemyCharacterList[i])
+    for obj in enemyCharacterList:
+        del obj

@@ -1,6 +1,6 @@
 from pico2d import *
 import gameFramework
-#import titleState
+import titleState
 
 victoryImage = None
 defeatImage = None
@@ -36,14 +36,14 @@ def update():
     global showTime
     showTime += gameFramework.frameTime
     if showTime >= 4.0:
-        gameFramework.running = False
+        gameFramework.change_state(titleState)
 
 
 def draw():
     global victoryImage, defeatImage
     clear_canvas()
     if isVictory:
-        victoryImage.draw_to_origin(0, 0, 800, 600)
+        victoryImage.draw_to_origin(250, 100, 800, 400)
     else:
-        defeatImage.draw_to_origin(0, 0, 800, 600)
+        defeatImage.draw_to_origin(250, 100, 800, 400)
     update_canvas()

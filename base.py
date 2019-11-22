@@ -1,5 +1,6 @@
 import camera
-
+import endState
+import gameFramework
 
 class base:
 
@@ -23,3 +24,13 @@ class base:
         else:
             self.hpBarImage.draw(self.x - camera.cameraXCoord, self.y + self.size / 2, self.hp / 2, self.hpBarHeigth)
             self.image.draw(self.x-camera.cameraXCoord, self.y,self.size,self.size)
+
+    def calcHp(self,_hp):
+        self.hp -= _hp
+        if self.hp <= 0:
+            if self.isAllyBase:
+                endState.isVictory = False
+                gameFramework.change_state(endState)
+            else:
+                endState.isVictory = True
+                gameFramework.change_state(endState)

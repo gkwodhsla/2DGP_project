@@ -5,7 +5,6 @@ from pico2d import *
 import enum
 import gameFramework
 import random
-import endState
 
 numOfAllyWalkImage = 6
 numOfAllyAttackImage = 7
@@ -225,7 +224,7 @@ class AttackState:
         object.frame = (object.frame + object.framesPerActionAttack * object.actionPerTime * gameFramework.frameTime) % object.framesPerActionAttack
         if type == 'ally':
             print(object.frame)
-            if int(object.frame) % object.framesPerActionAttack == 0:
+            if int(object.frame) % object.framesPerActionAttack == 4:
                 if not object.isBaseAttack:
                     worldObjManager.enemyCharacterList[0].hp -= object.offensePower
                     if worldObjManager.enemyCharacterList[0].hp <= 0:
@@ -233,10 +232,7 @@ class AttackState:
                         worldObjManager.enemyCharacterList[0].state = DeathState
                         # 상대캐릭터가 죽으면 나는 WALK상태가되고 상대는 DIE상태가된다.
                 else:
-                    worldObjManager.baseList[1].hp -= object.offensePower
-                    if worldObjManager.baseList[1].hp <=0:
-                        endState.isVictory = True
-                        gameFramework.change_state(endState)
+                    worldObjManager.baseList[1].calcHp(object.offensePower)
 
         else:
             if int(object.frame) % object.framesPerActionAttack == 4:
@@ -247,10 +243,8 @@ class AttackState:
                         worldObjManager.allyCharacterList[0].state = DeathState
                     # 상대캐릭터가 죽으면 나는 WALK상태가되고 상대는 DIE상태가된다.
                 else:
-                    worldObjManager.baseList[0].hp -= object.offensePower
-                    if worldObjManager.baseList[0].hp<=0:
-                        endState.isVictory = False
-                        gameFramework.change_state(endState)
+                    worldObjManager.baseList[0].calcHp(object.offensePower)
+
 
     @staticmethod
     def draw(object, type, characterType):

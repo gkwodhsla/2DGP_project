@@ -38,8 +38,8 @@ def exit():
     global allyBase, enemyBase, coin, spearRespawnButton
     del allyBase
     del enemyBase
-    del coin
-    del spearRespawnButton
+    #del coin
+    #del spearRespawnButton
     camera.exit()
     characterAttrib.exit()
     worldObjManager.deleteAllObjects()
@@ -73,7 +73,7 @@ def handle_events():
 
 
 def update():
-    global coin, spearRespawnButton
+    global spearRespawnButton
     worldObjManager.update()
     camera.update()
     coin.update()
@@ -81,7 +81,6 @@ def update():
 
 
 def draw():
-    global coin
     clear_canvas()
     camera.draw()
     coin.draw()
