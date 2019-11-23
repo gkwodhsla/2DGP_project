@@ -17,7 +17,7 @@ class Ork1(CharacterABC):
         self.y = y
         self.frame = 0.0
         self.hp = 200
-        self.offensePower = 2
+        self.offensePower = 3
         self.isBaseAttack = False
         self.right = self.x + self.size / 2
         self.left = self.x - self.size / 2
