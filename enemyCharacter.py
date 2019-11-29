@@ -17,8 +17,9 @@ class HammerOrk(CharacterABC):
         self.y = y
         self.frame = 0.0
         self.hp = 150
-        self.offensePower = 2
+        self.offensePower = 15
         self.isBaseAttack = False
+        self.isOnceAttack = False
         self.right = self.x + self.size / 2
         self.left = self.x - self.size / 2
         self.top = self.y + self.size / 2
@@ -78,9 +79,10 @@ class SwordOrk(CharacterABC):
         self.x = x
         self.y = y
         self.frame = 0.0
-        self.hp = 200
-        self.offensePower = 3
+        self.hp = 180
+        self.offensePower = 25
         self.isBaseAttack = False
+        self.isOnceAttack = False
         self.right = self.x + self.size / 2
         self.left = self.x - self.size / 2
         self.top = self.y + self.size / 2
@@ -141,8 +143,9 @@ class AxeOrk(CharacterABC):
         self.y = y
         self.frame = 0.0
         self.hp = 200
-        self.offensePower = 4
+        self.offensePower = 40
         self.isBaseAttack = False
+        self.isOnceAttack = False
         self.right = self.x + self.size / 2
         self.left = self.x - self.size / 2
         self.top = self.y + self.size / 2
@@ -187,44 +190,3 @@ class AxeOrk(CharacterABC):
 
     def changeState(self):
         pass
-"""
-class Ork3(CharacterABC):
-    state = CharacterState.WALK
-
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-        self.frame = 0
-        self.hp = 400
-        self.offensePower = 30
-
-    def draw(self):
-        if self.state == CharacterState.WALK:
-            orkWalkImageList[2][self.frame % numOfImage].composite_draw(0, 'h', self.x - camera.cameraXCoord, self.y,
-                                                                        self.size, self.size)
-        elif self.state == CharacterState.IDLE:
-            orkWalkImageList[2][self.frame % numOfImage].composite_draw(0, 'h', self.x - camera.cameraXCoord, self.y,
-                                                                        self.size, self.size)
-
-    def move(self):
-        pass
-
-    def update(self):
-        if self.state == CharacterState.WALK:
-            self.frame += 1
-            self.x -= 0.2
-
-    def checkCollision(self, frontCharacterXpos):
-        if self.x < frontCharacterXpos + self.size:
-            self.state = CharacterState.IDLE
-        else:
-            self.state = CharacterState.WALK
-
-    def checkEnemyMeet(self, enemyXpos):
-        if self.x < enemyXpos + self.size:
-            self.state = CharacterState.IDLE  # 일단 IDLE로 나중에 ATTACK으로 수정할것.
-
-    def changeState(self):
-        pass
-
-"""

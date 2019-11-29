@@ -17,8 +17,9 @@ class SpearMan(CharacterABC):
         self.y = y
         self.frame = 0.0
         self.hp = 100
-        self.offensePower = 1
+        self.offensePower = 10
         self.isBaseAttack = False
+        self.isOnceAttack = False
         if self.hpBarImage == None:
             self.hpBarImage = load_image("effectImages\\hpBar.png")
 
@@ -71,9 +72,10 @@ class AxeMan(CharacterABC):
         self.x = x
         self.y = y
         self.frame = 0.0
-        self.hp = 120
-        self.offensePower = 2
+        self.hp = 150
+        self.offensePower = 30
         self.isBaseAttack = False
+        self.isOnceAttack = False
         if self.hpBarImage == None:
             self.hpBarImage = load_image("effectImages\\hpBar.png")
 
@@ -126,9 +128,10 @@ class SwordMan(CharacterABC):
         self.x = x
         self.y = y
         self.frame = 0.0
-        self.hp = 150
-        self.offensePower = 3
+        self.hp = 200
+        self.offensePower = 40
         self.isBaseAttack = False
+        self.isOnceAttack = False
         if self.hpBarImage == None:
             self.hpBarImage = load_image("effectImages\\hpBar.png")
 

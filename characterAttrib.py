@@ -224,25 +224,33 @@ class AttackState:
         object.frame = (object.frame + object.framesPerActionAttack * object.actionPerTime * gameFramework.frameTime) % object.framesPerActionAttack
         if type == 'ally':
             if int(object.frame) % object.framesPerActionAttack == 4:
-                if not object.isBaseAttack:
-                    worldObjManager.enemyCharacterList[0].hp -= object.offensePower
-                    if worldObjManager.enemyCharacterList[0].hp <= 0:
-                        object.state = WalkState
-                        worldObjManager.enemyCharacterList[0].state = DeathState
-                        # 상대캐릭터가 죽으면 나는 WALK상태가되고 상대는 DIE상태가된다.
-                else:
-                    worldObjManager.baseList[1].calcHp(object.offensePower)
+                if not object.isOnceAttack:
+                    object.isOnceAttack = True
+                    if not object.isBaseAttack:
+                        worldObjManager.enemyCharacterList[0].hp -= object.offensePower
+                        if worldObjManager.enemyCharacterList[0].hp <= 0:
+                            object.state = WalkState
+                            worldObjManager.enemyCharacterList[0].state = DeathState
+                            # 상대캐릭터가 죽으면 나는 WALK상태가되고 상대는 DIE상태가된다.
+                    else:
+                        worldObjManager.baseList[1].calcHp(object.offensePower)
+            else:
+                object.isOnceAttack=False
 
         else:
             if int(object.frame) % object.framesPerActionAttack == 4:
-                if not object.isBaseAttack:
-                    worldObjManager.allyCharacterList[0].hp -= object.offensePower
-                    if worldObjManager.allyCharacterList[0].hp <= 0:
-                        object.state = WalkState
-                        worldObjManager.allyCharacterList[0].state = DeathState
-                    # 상대캐릭터가 죽으면 나는 WALK상태가되고 상대는 DIE상태가된다.
-                else:
-                    worldObjManager.baseList[0].calcHp(object.offensePower)
+                if not object.isOnceAttack:
+                    object.isOnceAttack = True
+                    if not object.isBaseAttack:
+                        worldObjManager.allyCharacterList[0].hp -= object.offensePower
+                        if worldObjManager.allyCharacterList[0].hp <= 0:
+                            object.state = WalkState
+                            worldObjManager.allyCharacterList[0].state = DeathState
+                        # 상대캐릭터가 죽으면 나는 WALK상태가되고 상대는 DIE상태가된다.
+                    else:
+                        worldObjManager.baseList[0].calcHp(object.offensePower)
+            else:
+                object.isOnceAttack=False
 
 
     @staticmethod

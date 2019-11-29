@@ -92,13 +92,13 @@ class SpearmanRespawnButton:
                     else:
                         self.state = MOUSE_OUT
 
-
     def makeObjectAndReturn(self,coin):
         if coin.currentMoney-self.cost >= 0:
             coin.currentMoney -= self.cost
             worldObjManager.addObject(allyCharacter.SpearMan(300, 100), 1)
             return True
         return False
+
 
 class AxemanRespawnButton:
     clickButtonImage = None
