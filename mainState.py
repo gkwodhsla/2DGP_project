@@ -14,6 +14,8 @@ allyBase = None
 enemyBase = None
 coin = None
 spearRespawnButton = None
+axeRespawnButton = None
+swordRespawnButton = None
 font = None
 cannonPrepareTime = 7.0
 curCannonPrepareTime = 0.0
@@ -21,11 +23,9 @@ curCannonPrepareTime = 0.0
 
 def enter():
     global allyBase, enemyBase
-    global coin, spearRespawnButton
+    global coin, spearRespawnButton, axeRespawnButton, swordRespawnButton
     global font
     camera.enter()
-    # allyCharacter.loadKnightImage()
-    # enemyCharacter.loadOrkImage()
 
     # fourth type is base type True: ally
     allyBase = base("base\\allyBase.png", 200, 150, True)
@@ -33,7 +33,8 @@ def enter():
 
     coin = GUI.Coin()
     spearRespawnButton = GUI.SpearmanRespawnButton()
-
+    axeRespawnButton = GUI.AxemanRespawnButton()
+    swordRespawnButton = GUI.SwordmanRespawnButton()
     worldObjManager.addObject(allyBase, 0)
     worldObjManager.addObject(enemyBase, 0)
 
@@ -41,13 +42,13 @@ def enter():
 
 
 def exit():
-    global allyBase, enemyBase, coin, spearRespawnButton
+    global allyBase, enemyBase, coin, spearRespawnButton, swordRespawnButton
     del allyBase
     del enemyBase
     # del coin
     # del spearRespawnButton
     camera.exit()
-    characterAttrib.exit()
+    #characterAttrib.exit()
     worldObjManager.deleteAllObjects()
 
 
@@ -60,10 +61,12 @@ def resume():
 
 
 def handle_events():
-    global spearRespawnButton, coin, curCannonPrepareTime
+    global spearRespawnButton, axeRespawnButton ,coin, curCannonPrepareTime, swordRespawnButton
     events = get_events()
     for event in events:
         spearRespawnButton.handleEvent(event, coin)
+        axeRespawnButton.handleEvent(event, coin)
+        swordRespawnButton.handleEvent(event,coin)
         if event.type == SDL_QUIT:
             gameFramework.running = False
         elif event.type == SDL_MOUSEMOTION:
@@ -72,7 +75,7 @@ def handle_events():
             if event.key == SDLK_0:
                 worldObjManager.addObject(allyCharacter.SwordMan(300, 100), 1)
             elif event.key == SDLK_1:
-                worldObjManager.addObject(enemyCharacter.HammerOrk(1600, 100), 2)
+                worldObjManager.addObject(enemyCharacter.AxeOrk(1600, 100), 2)
             elif event.key == SDLK_SPACE:
                 if curCannonPrepareTime <= 0.0:
                     for i in range(4):
@@ -81,11 +84,13 @@ def handle_events():
 
 
 def update():
-    global spearRespawnButton, curCannonPrepareTime
+    global spearRespawnButton, axeRespawnButton, curCannonPrepareTime, swordRespawnButton
     worldObjManager.update()
     camera.update()
     coin.update()
     spearRespawnButton.update()
+    axeRespawnButton.update()
+    swordRespawnButton.update()
     if curCannonPrepareTime >= 0.0:
         curCannonPrepareTime -= gameFramework.frameTime
 
@@ -95,6 +100,8 @@ def draw():
     camera.draw()
     coin.draw()
     spearRespawnButton.draw()
+    axeRespawnButton.draw()
+    swordRespawnButton.draw()
     worldObjManager.drawObject()
     if curCannonPrepareTime <= 0:
         font.draw(300, 50, 'cannon is ready press spacebar!!!', (255, 255, 255))
