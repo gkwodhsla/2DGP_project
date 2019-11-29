@@ -2,7 +2,7 @@ from characterAttrib import *
 import worldObjManager
 
 
-class Knight1(CharacterABC):
+class SpearMan(CharacterABC):
     state = WalkState
     hpBarImage = None
     timePerACtion = 0.8  # 초당 0.8번의 행동을한다.

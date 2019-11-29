@@ -96,7 +96,7 @@ class SpearmanRespawnButton:
     def makeObjectAndReturn(self,coin):
         if coin.currentMoney-self.cost >= 0:
             coin.currentMoney -= self.cost
-            worldObjManager.addObject(allyCharacter.Knight1(300, 100), 1)
+            worldObjManager.addObject(allyCharacter.SpearMan(300, 100), 1)
             return True
         return False
 

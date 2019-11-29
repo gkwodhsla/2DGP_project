@@ -2,7 +2,7 @@ from characterAttrib import *
 import worldObjManager
 
 
-class Ork1(CharacterABC):
+class HammerOrk(CharacterABC):
     state = WalkState
     hpBarImage = None
     timePerACtion = 0.5  # 초당 0.5번의 행동을한다.

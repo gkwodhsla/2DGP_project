@@ -70,9 +70,9 @@ def handle_events():
             camera.handleEvent(event.x)
         elif event.type == SDL_KEYDOWN:
             if event.key == SDLK_0:
-                worldObjManager.addObject(allyCharacter.Knight1(300, 100), 1)
+                worldObjManager.addObject(allyCharacter.SpearMan(300, 100), 1)
             elif event.key == SDLK_1:
-                worldObjManager.addObject(enemyCharacter.Ork1(1600, 100), 2)
+                worldObjManager.addObject(enemyCharacter.HammerOrk(1600, 100), 2)
             elif event.key == SDLK_SPACE:
                 if curCannonPrepareTime <= 0.0:
                     for i in range(4):
