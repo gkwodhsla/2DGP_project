@@ -7,7 +7,7 @@ import gameFramework
 import random
 
 numOfAllyWalkImage = 6
-numOfAllyAttackImage = 7
+numOfAllyAttackImage = 6
 numOfAllyDieImage = 6
 numOfAllyIdleImage = 7
 
@@ -56,20 +56,20 @@ class EnemyCharacterIndex(enum.Enum):
 def loadKnightImage():
     for i in range(0, numOfAllyWalkImage + 1):
         knightWalkImageList[0].append(load_image("Ally\\Knight\\1_KNIGHT\\_WALK\\_WALK_00" + str(i) + ".png"))
-        # knightWalkImageList[1].append(load_image("Ally\\Knight\\2_KNIGHT\\_WALK\\_WALK_00" + str(i) + ".png"))
-        # knightWalkImageList[2].append(load_image("Ally\\Knight\\3_KNIGHT\\_WALK\\_WALK_00" + str(i) + ".png"))
+        knightWalkImageList[1].append(load_image("Ally\\Knight\\2_KNIGHT\\_WALK\\_WALK_00" + str(i) + ".png"))
+        knightWalkImageList[2].append(load_image("Ally\\Knight\\3_KNIGHT\\_WALK\\_WALK_00" + str(i) + ".png"))
     for i in range(0, numOfAllyAttackImage + 1):
         knightAttackImageList[0].append(load_image("Ally\\Knight\\1_KNIGHT\\_ATTACK\\ATTACK_00" + str(i) + ".png"))
-        # knightAttackImageList[1].append(load_image("Ally\\Knight\\2_KNIGHT\\_ATTACK\\ATTACK_00" + str(i) + ".png"))
-        # knightAttackImageList[2].append(load_image("Ally\\Knight\\3_KNIGHT\\_ATTACK\\ATTACK_00" + str(i) + ".png"))
+        knightAttackImageList[1].append(load_image("Ally\\Knight\\2_KNIGHT\\_ATTACK\\ATTACK_00" + str(i) + ".png"))
+        knightAttackImageList[2].append(load_image("Ally\\Knight\\3_KNIGHT\\_ATTACK\\ATTACK_00" + str(i) + ".png"))
     for i in range(0, numOfAllyDieImage + 1):
         knightDieImageList[0].append(load_image("Ally\\Knight\\1_KNIGHT\\_DIE\\_DIE_00" + str(i) + ".png"))
-        # knightDieImageList[1].append(load_image("Ally\\Knight\\2_KNIGHT\\_DIE\\_DIE_00" + str(i) + ".png"))
-        # knightDieImageList[2].append(load_image("Ally\\Knight\\2_KNIGHT\\_DIE\\_DIE_00" + str(i) + ".png"))
+        knightDieImageList[1].append(load_image("Ally\\Knight\\2_KNIGHT\\_DIE\\_DIE_00" + str(i) + ".png"))
+        knightDieImageList[2].append(load_image("Ally\\Knight\\3_KNIGHT\\_DIE\\_DIE_00" + str(i) + ".png"))
     for i in range(0, numOfAllyDieImage + 1):
         knightIdleImageList[0].append(load_image("Ally\\Knight\\1_KNIGHT\\_IDLE\\_IDLE_00" + str(i) + ".png"))
-        # knightIdleImageList[1].append(load_image("Ally\\Knight\\2_KNIGHT\\_IDLE\\_IDLE_00" + str(i) + ".png"))
-        # knightIdleImageList[2].append(load_image("Ally\\Knight\\2_KNIGHT\\_IDLE\\_IDLE_00" + str(i) + ".png"))
+        knightIdleImageList[1].append(load_image("Ally\\Knight\\2_KNIGHT\\_IDLE\\_IDLE_00" + str(i) + ".png"))
+        knightIdleImageList[2].append(load_image("Ally\\Knight\\3_KNIGHT\\_IDLE\\_IDLE_00" + str(i) + ".png"))
 
 def loadOrkImage():
     for i in range(0, numOfEnemyWalkImage + 1):
@@ -287,7 +287,7 @@ class DeathState:
     def draw(object, type, characterType):
         # type0 = ally type1 = enemy
         # characterType==0 knight1 , 1 knight2, 2 knight 3
-        if type == 'ally' and characterType == 0:
+        if type == 'ally':
             object.hpBarImage.draw(object.x - allyhpBarPos - camera.cameraXCoord, object.y + object.size / 2,
                                    object.hp / 2, allyhpBarHeigth)
             knightDieImageList[characterType][int(object.frame) % object.framesPerActionDeath].draw(object.x - camera.cameraXCoord, object.y,

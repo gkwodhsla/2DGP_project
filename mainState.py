@@ -70,7 +70,7 @@ def handle_events():
             camera.handleEvent(event.x)
         elif event.type == SDL_KEYDOWN:
             if event.key == SDLK_0:
-                worldObjManager.addObject(allyCharacter.SpearMan(300, 100), 1)
+                worldObjManager.addObject(allyCharacter.SwordMan(300, 100), 1)
             elif event.key == SDLK_1:
                 worldObjManager.addObject(enemyCharacter.HammerOrk(1600, 100), 2)
             elif event.key == SDLK_SPACE:

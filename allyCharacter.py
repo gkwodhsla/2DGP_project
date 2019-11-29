@@ -5,8 +5,8 @@ import worldObjManager
 class SpearMan(CharacterABC):
     state = WalkState
     hpBarImage = None
-    timePerACtion = 0.8  # 초당 0.8번의 행동을한다.
-    actionPerTime = 1.0 / timePerACtion
+    timePerAction = 0.8  # 초당 0.8번의 행동을한다.
+    actionPerTime = 1.0 / timePerAction
     framesPerActionIdle = 6
     framesPerActionWalk = 6
     framesPerActionAttack = 7
@@ -57,84 +57,111 @@ class SpearMan(CharacterABC):
         pass
 
 
-"""
-class Knight2(CharacterABC):
-    state = CharacterState.WALK
+class AxeMan(CharacterABC):
+    state = WalkState
+    hpBarImage = None
+    timePerAction = 0.8  # 초당 0.8번의 행동을한다.
+    actionPerTime = 1.0 / timePerAction
+    framesPerActionIdle = 6
+    framesPerActionWalk = 6
+    framesPerActionAttack = 6
+    framesPerActionDeath = 6
 
     def __init__(self, x, y):
         self.x = x
         self.y = y
-        self.frame = 0
-        self.hp = 200
-        self.offensePower = 20
+        self.frame = 0.0
+        self.hp = 120
+        self.offensePower = 2
+        self.isBaseAttack = False
+        if self.hpBarImage == None:
+            self.hpBarImage = load_image("effectImages\\hpBar.png")
 
     def draw(self):
-        if self.state == CharacterState.WALK:
-            knightWalkImageList[1][self.frame % numOfWalkImage].draw(self.x - camera.cameraXCoord, self.y, self.size,
-                                                                     self.size)
-        elif self.state == CharacterState.IDLE:
-            knightWalkImageList[1][self.frame % numOfWalkImage].draw(self.x - camera.cameraXCoord, self.y, self.size,
-                                                                     self.size)
+        self.state.draw(self, 'ally', AllyCharacterIndex.knight2.value)
 
-    def move(self):
-        pass
 
     def update(self):
-        if self.state == CharacterState.WALK:
-            self.frame += 1
-            self.x += 0.1
+        self.state.update(self, 'ally')
+        if self.hp <= 0:
+            return True
 
-    def checkCollision(self, frontCharacterXpos):
+        return False
+
+    def checkCollisionWithAlly(self, frontCharacterXpos):
         if self.x + self.size > frontCharacterXpos:
-            self.state = CharacterState.IDLE
+            self.state = IdleState
         else:
-            self.state = CharacterState.WALK
+            self.state = WalkState
 
-    def checkEnemyMeet(self, enemyXpos):
+    def checkCollisionWithEnemy(self, enemyXpos):
         if self.x + self.size > enemyXpos:
-            self.state = CharacterState.IDLE  # 일단 IDLE로 나중에 ATTACK으로 수정할것.
+            if self.state != AttackState and worldObjManager.enemyCharacterList[0].hp > 0:
+                self.state = AttackState
+                self.frame = 0
+        else:
+            self.state = WalkState
 
+    def checkCollisionWithBase(self):
+        if self.x + self.size > worldObjManager.baseList[1].x:
+            self.state = AttackState
+            self.isBaseAttack = True
+        else:
+            self.state = WalkState
     def changeState(self):
         pass
 
 
-class Knight3(CharacterABC):
-    state = CharacterState.WALK
+class SwordMan(CharacterABC):
+    state = WalkState
+    hpBarImage = None
+    timePerAction = 0.8  # 초당 0.8번의 행동을한다.
+    actionPerTime = 1.0 / timePerAction
+    framesPerActionIdle = 6
+    framesPerActionWalk = 6
+    framesPerActionAttack = 6
+    framesPerActionDeath = 6
 
     def __init__(self, x, y):
         self.x = x
         self.y = y
-        self.frame = 0
-        self.hp = 300
-        self.offensePower = 30
+        self.frame = 0.0
+        self.hp = 150
+        self.offensePower = 3
+        self.isBaseAttack = False
+        if self.hpBarImage == None:
+            self.hpBarImage = load_image("effectImages\\hpBar.png")
 
     def draw(self):
-        if self.state == CharacterState.WALK:
-            knightWalkImageList[2][self.frame % numOfWalkImage].draw(self.x - camera.cameraXCoord, self.y, self.size,
-                                                                     self.size)
-        elif self.state == CharacterState.IDLE:
-            knightWalkImageList[2][self.frame % numOfWalkImage].draw(self.x - camera.cameraXCoord, self.y, self.size,
-                                                                     self.size)
+        self.state.draw(self, 'ally', AllyCharacterIndex.knight3.value)
 
-    def move(self):
-        pass
 
     def update(self):
-        if self.state == CharacterState.WALK:
-            self.frame += 1
-            self.x += 0.1
+        self.state.update(self, 'ally')
+        if self.hp <= 0:
+            return True
 
-    def checkCollision(self, frontCharacterXpos):
+        return False
+
+    def checkCollisionWithAlly(self, frontCharacterXpos):
         if self.x + self.size > frontCharacterXpos:
-            self.state = CharacterState.IDLE
+            self.state = IdleState
         else:
-            self.state = CharacterState.WALK
+            self.state = WalkState
 
-    def checkEnemyMeet(self, enemyXpos):
+    def checkCollisionWithEnemy(self, enemyXpos):
         if self.x + self.size > enemyXpos:
-            self.state = CharacterState.IDLE  # 일단 IDLE로 나중에 ATTACK으로 수정할것.
+            if self.state != AttackState and worldObjManager.enemyCharacterList[0].hp > 0:
+                self.state = AttackState
+                self.frame = 0
+        else:
+            self.state = WalkState
 
+    def checkCollisionWithBase(self):
+        if self.x + self.size > worldObjManager.baseList[1].x:
+            self.state = AttackState
+            self.isBaseAttack = True
+        else:
+            self.state = WalkState
     def changeState(self):
         pass
-    
-"""

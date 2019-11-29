@@ -5,8 +5,8 @@ import worldObjManager
 class HammerOrk(CharacterABC):
     state = WalkState
     hpBarImage = None
-    timePerACtion = 0.5  # 초당 0.5번의 행동을한다.
-    actionPerTime = 1.0 / timePerACtion
+    timePerAction = 0.5  # 초당 0.5번의 행동을한다.
+    actionPerTime = 1.0 / timePerAction
     framesPerActionIdle = 6
     framesPerActionWalk = 6
     framesPerActionAttack = 6
