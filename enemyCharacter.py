@@ -5,7 +5,7 @@ import worldObjManager
 class HammerOrk(CharacterABC):
     state = WalkState
     hpBarImage = None
-    timePerAction = 0.5  # 초당 0.5번의 행동을한다.
+    timePerAction = 0.8
     actionPerTime = 1.0 / timePerAction
     framesPerActionIdle = 6
     framesPerActionWalk = 6
@@ -70,7 +70,7 @@ class HammerOrk(CharacterABC):
 class SwordOrk(CharacterABC):
     state = WalkState
     hpBarImage = None
-    timePerAction = 0.5  # 초당 0.5번의 행동을한다.
+    timePerAction = 0.8
     actionPerTime = 1.0 / timePerAction
     framesPerActionIdle = 6
     framesPerActionWalk = 6
@@ -135,7 +135,7 @@ class SwordOrk(CharacterABC):
 class AxeOrk(CharacterABC):
     state = WalkState
     hpBarImage = None
-    timePerAction = 0.5  # 초당 0.5번의 행동을한다.
+    timePerAction = 0.8
     actionPerTime = 1.0 / timePerAction
     framesPerActionIdle = 6
     framesPerActionWalk = 6

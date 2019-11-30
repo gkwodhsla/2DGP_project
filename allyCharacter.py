@@ -135,7 +135,7 @@ class SwordMan(CharacterABC):
         self.frame = 0.0
         self.bloodFrame = 0.0
         self.hp = 200
-        self.offensePower = 1
+        self.offensePower = 40
         self.isBaseAttack = False
         self.isOnceAttack = False
         self.isBleeding = False

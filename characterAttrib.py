@@ -47,7 +47,7 @@ runSpeedPps = (runSpeedMps * pixelPerMeter)
 velocity = runSpeedPps
 
 bloodImageNum = 6
-timePerBleeding = 0.2
+timePerBleeding = 0.4
 bleedingPerTime = 1.0 / timePerBleeding
 bloodImage = None
 
@@ -249,6 +249,7 @@ class AttackState:
             object.bloodFrame = (object.bloodFrame + bloodImageNum * bleedingPerTime * gameFramework.frameTime) % bloodImageNum
             if int(object.bloodFrame) % bloodImageNum == 5:
                 object.isBleeding = False
+                object.bloodFrame = 0.0
                 #when bleeding animation has been terminated.
 
         if type == 'ally':
@@ -295,8 +296,8 @@ class AttackState:
                 object.size,
                 object.size)
             if object.isBleeding:
-                bloodImage.clip_draw_to_origin(int(object.bloodFrame) * 512, 0, 512, 512, object.x + 50 -
-                                               camera.cameraXCoord, object.y, 50, 50)
+                bloodImage.clip_draw_to_origin(int(object.bloodFrame) % bloodImageNum * 512, 0, 512, 512, object.x + 50 -
+                                               camera.cameraXCoord, object.y-30, 60, 60)
         else:
             object.hpBarImage.draw(object.x + enemyhpBarPos - camera.cameraXCoord, object.y + object.size / 2,
                                    object.hp / 2, enemyhpBarHeigt)
@@ -306,8 +307,8 @@ class AttackState:
                                                                                                                object.size,
                                                                                                                object.size)
             if object.isBleeding:
-                bloodImage.clip_draw_to_origin(int(object.bloodFrame) * 512, 0, 512, 512, object.x - 50 -
-                                               camera.cameraXCoord, object.y, 50, 50)
+                bloodImage.clip_draw_to_origin(int(object.bloodFrame) % bloodImageNum * 512, 0, 512, 512, object.x - 100 -
+                                               camera.cameraXCoord, object.y-30, 60, 60)
 
     @staticmethod
     def exit(object):
@@ -321,8 +322,7 @@ class DeathState:
 
     @staticmethod
     def update(object, type):
-        object.frame = (
-                                   object.frame + object.framesPerActionDeath * object.actionPerTime * gameFramework.frameTime) % object.framesPerActionDeath
+        object.frame = (object.frame + object.framesPerActionDeath * object.actionPerTime * gameFramework.frameTime) % object.framesPerActionDeath
         if type == 'ally':
             if object.frame >= float(object.framesPerActionDeath) - 0.2:
                 if len(worldObjManager.allyDeathList) > 0:
