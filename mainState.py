@@ -17,6 +17,7 @@ spearRespawnButton = None
 axeRespawnButton = None
 swordRespawnButton = None
 font = None
+oldScroll = None
 cannonPrepareTime = 7.0
 curCannonPrepareTime = 0.0
 
@@ -25,6 +26,7 @@ def enter():
     global allyBase, enemyBase
     global coin, spearRespawnButton, axeRespawnButton, swordRespawnButton
     global font
+    global oldScroll
     camera.enter()
 
     # fourth type is base type True: ally
@@ -37,7 +39,7 @@ def enter():
     swordRespawnButton = GUI.SwordmanRespawnButton()
     worldObjManager.addObject(allyBase, 0)
     worldObjManager.addObject(enemyBase, 0)
-
+    oldScroll = GUI.OldScroll()
     font = load_font('textfile\\Sofija.TTF', 25)
 
 
@@ -99,6 +101,7 @@ def draw():
     clear_canvas()
     camera.draw()
     coin.draw()
+    oldScroll.draw()
     spearRespawnButton.draw()
     axeRespawnButton.draw()
     swordRespawnButton.draw()

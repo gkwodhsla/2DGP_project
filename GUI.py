@@ -29,6 +29,19 @@ class Coin:
 MOUSE_ON, MOUSE_OUT, MOUSE_CLICK, WAIT = range(4)
 
 
+class OldScroll:
+    scrollImage = None
+    def __init__(self):
+        self.x = 25
+        self.y = camera.windowHEIGHT - 160
+        self.width = 450
+        self.height = 150
+        if self.scrollImage is None:
+            self.scrollImage = camera.load_image("effectImages\\oldScroll.png")
+
+    def draw(self):
+        self.scrollImage.draw_to_origin(self.x, self.y, self.width, self.height)
+
 class SpearmanRespawnButton:
     clickButtonImage = None
     onButtonImage = None
