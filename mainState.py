@@ -61,7 +61,7 @@ def resume():
 
 
 def handle_events():
-    global spearRespawnButton, axeRespawnButton ,coin, curCannonPrepareTime, swordRespawnButton
+    global curCannonPrepareTime
     events = get_events()
     for event in events:
         spearRespawnButton.handleEvent(event, coin)
@@ -84,7 +84,7 @@ def handle_events():
 
 
 def update():
-    global spearRespawnButton, axeRespawnButton, curCannonPrepareTime, swordRespawnButton
+    global curCannonPrepareTime
     worldObjManager.update()
     camera.update()
     coin.update()

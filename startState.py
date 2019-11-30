@@ -37,7 +37,7 @@ def update():
         i += 1
     elif i == 1:
         characterAttrib.loadOrkImage()
-        percentage = 80
+        percentage = 50
         i+=1
     elif i == 2:
         characterAttrib.loadKnightImage()
