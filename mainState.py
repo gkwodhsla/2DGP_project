@@ -6,7 +6,7 @@ import worldObjManager
 import allyCharacter
 import enemyCharacter
 import gameFramework
-import characterAttrib
+
 import cannon
 import GUI
 

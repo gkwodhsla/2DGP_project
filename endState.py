@@ -36,7 +36,7 @@ def update():
     global showTime
     showTime += gameFramework.frameTime
     if showTime >= 4.0:
-        gameFramework.change_state(titleState)
+        gameFramework.running = False
 
 
 def draw():

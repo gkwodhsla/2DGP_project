@@ -8,6 +8,7 @@ windowHEIGHT = 600
 
 
 backgroundImage = None
+backgroundMusic = None
 
 x = 0
 y = 0
@@ -21,6 +22,10 @@ moveLeft = False
 def enter():
     global backgroundImage
     backgroundImage = load_image("background\\" + str(random.randint(1, 4)) + ".png")
+    global backgroundMusic
+    backgroundMusic = load_music("sound\\background_music.mp3")
+    backgroundMusic.set_volume(64)
+    backgroundMusic.repeat_play()
 
 def draw():
     global cameraXCoord
