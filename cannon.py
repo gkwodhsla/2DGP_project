@@ -91,6 +91,7 @@ class Cannon:
                     worldObjManager.enemyDeathList.append(enemy)
                     worldObjManager.enemyCharacterList.remove(enemy)
                     enemy.state = characterAttrib.DeathState
+                    characterAttrib.orcDownSound.play()
 
             if (self.y - self.size <= 0):
                 self.explosionSound.play()

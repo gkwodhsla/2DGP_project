@@ -23,7 +23,7 @@ def enter():
     global backgroundImage
     backgroundImage = load_image("background\\" + str(random.randint(1, 4)) + ".png")
     global backgroundMusic
-    backgroundMusic = load_music("sound\\background_music.mp3")
+    backgroundMusic = load_music("sound\\Company_of_Heroes_main_theme.mp3")
     backgroundMusic.set_volume(40)
     backgroundMusic.repeat_play()
 

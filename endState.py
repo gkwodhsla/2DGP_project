@@ -1,17 +1,28 @@
 from pico2d import *
 import gameFramework
-import titleState
+import camera
 
 victoryImage = None
 defeatImage = None
 isVictory = None
 showTime = 0.0
+victorySound = None
+defeatSound = None
 
 
 def enter():
-    global victoryImage, defeatImage
+    camera.backgroundMusic.stop()
+    global victoryImage, defeatImage, victorySound, defeatSound
     victoryImage = load_image('effectImages\\victory.png')
     defeatImage = load_image("effectImages\\defeat.png")
+    victorySound = load_wav("sound\\win.wav")
+    defeatSound = load_wav("sound\\lose.wav")
+    victorySound.set_volume(128)
+    defeatSound.set_volume(128)
+    if isVictory:
+        victorySound.play()
+    else:
+        defeatSound.play()
 
 
 def exit():
