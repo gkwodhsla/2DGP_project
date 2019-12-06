@@ -45,16 +45,8 @@ def enter():
 
 
 def exit():
-    pass
-    """global allyBase, enemyBase, coin, spearRespawnButton, swordRespawnButton
-    del allyBase
-    del enemyBase
-    # del coin
-    # del spearRespawnButton
-    camera.exit()
-    #characterAttrib.exit()
     worldObjManager.deleteAllObjects()
-"""
+
 
 def pause():
     pass

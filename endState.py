@@ -1,6 +1,8 @@
 from pico2d import *
 import gameFramework
 import camera
+import characterAttrib
+
 
 victoryImage = None
 defeatImage = None
@@ -29,6 +31,8 @@ def exit():
     global victoryImage, defeatImage
     del victoryImage
     del defeatImage
+    characterAttrib.delAllImage()
+    camera.exit()
 
 
 def pause():

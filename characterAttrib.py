@@ -113,7 +113,7 @@ def loadOrkImage():
         orkIdleImageList[2].append(load_image("Enemy\\Orks\\3_ORK\\IDLE\\IDLE_00" + str(i) + ".png"))
 
 
-def exit():
+def delAllImage():
     global bloodImage
     global meleeSound
     global manDownSound
@@ -121,37 +121,16 @@ def exit():
     del meleeSound
     del manDownSound
     del orcDownSound
-    del (knightWalkImageList[0])
-    del (knightWalkImageList[1])
-    del (knightWalkImageList[2])
-
-    del (knightAttackImageList[0])
-    del (knightAttackImageList[1])
-    del (knightAttackImageList[2])
-
-    del (knightDieImageList[0])
-    del (knightDieImageList[0])
-    del (knightDieImageList[0])
-
-    del (knightIdleImageList[0])
-    del (knightIdleImageList[1])
-    del (knightIdleImageList[2])
-
-    del (orkWalkImageList[0])
-    del (orkWalkImageList[1])
-    del (orkWalkImageList[2])
-
-    del (orkAttackImageList[0])
-    del (orkAttackImageList[1])
-    del (orkAttackImageList[2])
-
-    del (orkDieImageList[0])
-    del (orkDieImageList[1])
-    del (orkDieImageList[2])
-
-    del (orkIdleImageList[0])
-    del (knightIdleImageList[1])
-    del (knightIdleImageList[2])
+    for i in range(0,3):
+        del (knightWalkImageList[0])
+        del (knightAttackImageList[0])
+        del (knightDieImageList[0])
+        del (knightIdleImageList[0])
+        del (orkWalkImageList[0])
+        del (orkAttackImageList[0])
+        del (orkDieImageList[0])
+        del (orkIdleImageList[0])
+   
 
     del bloodImage
 
