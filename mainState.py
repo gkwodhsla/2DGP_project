@@ -31,8 +31,8 @@ def enter():
     tempCannon=cannon.Cannon()
     del(tempCannon)
     # fourth type is base type True: ally
-    allyBase = base("base\\allyBase.png", 200, 150, True)
-    enemyBase = base("base\\enemyBase.png", camera.backgroundImage.w - 200, 150, False)
+    allyBase = AllyBase("base\\allyBase.png", 200, 150)
+    enemyBase = EnemyBase("base\\enemyBase.png", camera.backgroundImage.w - 200, 150)
 
     coin = GUI.Coin()
     spearRespawnButton = GUI.SpearmanRespawnButton()
@@ -45,7 +45,8 @@ def enter():
 
 
 def exit():
-    global allyBase, enemyBase, coin, spearRespawnButton, swordRespawnButton
+    pass
+    """global allyBase, enemyBase, coin, spearRespawnButton, swordRespawnButton
     del allyBase
     del enemyBase
     # del coin
@@ -53,7 +54,7 @@ def exit():
     camera.exit()
     #characterAttrib.exit()
     worldObjManager.deleteAllObjects()
-
+"""
 
 def pause():
     pass
@@ -75,11 +76,7 @@ def handle_events():
         elif event.type == SDL_MOUSEMOTION:
             camera.handleEvent(event.x)
         elif event.type == SDL_KEYDOWN:
-            if event.key == SDLK_0:
-                worldObjManager.addObject(allyCharacter.SwordMan(300, 100), 1)
-            elif event.key == SDLK_1:
-                worldObjManager.addObject(enemyCharacter.AxeOrk(1600, 100), 2)
-            elif event.key == SDLK_SPACE:
+            if event.key == SDLK_SPACE:
                 if curCannonPrepareTime <= 0.0:
                     for i in range(4):
                         worldObjManager.addObject(cannon.Cannon(), 3)
@@ -88,6 +85,11 @@ def handle_events():
 
 def update():
     global curCannonPrepareTime
+    if enemyBase.update():
+        worldObjManager.addObject(enemyCharacter.HammerOrk(1600,100), 2)
+        worldObjManager.addObject(enemyCharacter.AxeOrk(1600, 100), 2)
+        worldObjManager.addObject(enemyCharacter.SwordOrk(1600, 100), 2)
+
     worldObjManager.update()
     camera.update()
     coin.update()
