@@ -18,7 +18,7 @@ class HammerOrk(CharacterABC):
         self.frame = 0.0
         self.bloodFrame = 0.0
         self.hp = 150
-        self.offensePower = 15
+        self.offensePower = 25
         self.isBaseAttack = False
         self.isOnceAttack = False
         self.isBleeding = False
@@ -84,7 +84,7 @@ class SwordOrk(CharacterABC):
         self.frame = 0.0
         self.bloodFrame = 0.0
         self.hp = 180
-        self.offensePower = 25
+        self.offensePower = 40
         self.isBaseAttack = False
         self.isOnceAttack = False
         self.isBleeding = False
@@ -150,7 +150,7 @@ class AxeOrk(CharacterABC):
         self.frame = 0.0
         self.bloodFrame = 0.0
         self.hp = 200
-        self.offensePower = 40
+        self.offensePower = 70
         self.isBaseAttack = False
         self.isOnceAttack = False
         self.isBleeding = False

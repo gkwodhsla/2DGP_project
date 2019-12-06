@@ -36,7 +36,7 @@ class Cannon:
         self.degree = 0
 
         self.initVelocity = self.shootSpeedPps
-        self.launchAngle = float(random.randint(5, 25))
+        self.launchAngle = float(random.randint(5, 20))
         self.xVelocity = self.initVelocity * math.cos(math.radians(self.launchAngle))
         self.yVelocity = self.initVelocity * math.sin(math.radians(self.launchAngle))
 
@@ -52,7 +52,7 @@ class Cannon:
         self.right=self.x+self.size/2
         self.left=self.x-self.size/2
         self.top=self.y+self.size/2
-        self.bottom=self.y-self.size/2 - 10
+        self.bottom=self.y-self.size/2 - 30
         self.degree+=5
         if self.isExplosion:
             self.frame = (self.frame + self.framesPerAction * self.actionPerTime * gameFramework.frameTime) % self.framesPerAction

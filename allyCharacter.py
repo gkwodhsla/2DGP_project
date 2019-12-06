@@ -18,7 +18,7 @@ class SpearMan(CharacterABC):
         self.frame = 0.0
         self.bloodFrame = 0.0
         self.hp = 100
-        self.offensePower = 10
+        self.offensePower = 20
         self.isBaseAttack = False
         self.isOnceAttack = False
         self.isBleeding = False
@@ -77,7 +77,7 @@ class AxeMan(CharacterABC):
         self.frame = 0.0
         self.bloodFrame = 0.0
         self.hp = 150
-        self.offensePower = 30
+        self.offensePower = 35
         self.isBaseAttack = False
         self.isOnceAttack = False
         self.isBleeding = False
@@ -135,7 +135,7 @@ class SwordMan(CharacterABC):
         self.frame = 0.0
         self.bloodFrame = 0.0
         self.hp = 200
-        self.offensePower = 40
+        self.offensePower = 50
         self.isBaseAttack = False
         self.isOnceAttack = False
         self.isBleeding = False
