@@ -24,7 +24,7 @@ def enter():
     backgroundImage = load_image("background\\" + str(random.randint(1, 4)) + ".png")
     global backgroundMusic
     backgroundMusic = load_music("sound\\background_music.mp3")
-    backgroundMusic.set_volume(64)
+    backgroundMusic.set_volume(40)
     backgroundMusic.repeat_play()
 
 def draw():

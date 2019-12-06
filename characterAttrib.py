@@ -51,6 +51,10 @@ timePerBleeding = 0.4
 bleedingPerTime = 1.0 / timePerBleeding
 bloodImage = None
 
+meleeSound = None
+manDownSound = None
+orcDownSound = None
+
 
 class EnemyCharacterIndex(enum.Enum):
     ork1 = 0
@@ -62,7 +66,16 @@ class EnemyCharacterIndex(enum.Enum):
 
 def loadKnightImage():
     global bloodImage
+    global meleeSound
+    global manDownSound
+    global orcDownSound
     bloodImage = load_image("effectImages\\blood.png")
+    meleeSound = load_wav("sound\\meleeSwing.wav")
+    manDownSound = load_wav("sound\\manDown.wav")
+    orcDownSound = load_wav("sound\\orcDown.wav")
+    meleeSound.set_volume(50)
+    manDownSound.set_volume(50)
+    orcDownSound.set_volume(50)
     for i in range(0, numOfAllyWalkImage + 1):
         knightWalkImageList[0].append(load_image("Ally\\Knight\\1_KNIGHT\\_WALK\\_WALK_00" + str(i) + ".png"))
         knightWalkImageList[1].append(load_image("Ally\\Knight\\2_KNIGHT\\_WALK\\_WALK_00" + str(i) + ".png"))
@@ -102,6 +115,12 @@ def loadOrkImage():
 
 def exit():
     global bloodImage
+    global meleeSound
+    global manDownSound
+    global orcDownSound
+    del meleeSound
+    del manDownSound
+    del orcDownSound
     del (knightWalkImageList[0])
     del (knightWalkImageList[1])
     del (knightWalkImageList[2])
@@ -171,7 +190,7 @@ class IdleState:
     @staticmethod
     def update(object, type):
         object.frame = (
-                                   object.frame + object.framesPerActionIdle * object.actionPerTime * gameFramework.frameTime) % object.framesPerActionIdle
+                               object.frame + object.framesPerActionIdle * object.actionPerTime * gameFramework.frameTime) % object.framesPerActionIdle
 
     @staticmethod
     def draw(object, type, characterType):
@@ -206,7 +225,7 @@ class WalkState:
     @staticmethod
     def update(object, type):
         object.frame = (
-                                   object.frame + object.framesPerActionWalk * object.actionPerTime * gameFramework.frameTime) % object.framesPerActionWalk
+                               object.frame + object.framesPerActionWalk * object.actionPerTime * gameFramework.frameTime) % object.framesPerActionWalk
         if type == 'ally':
             object.x += velocity * gameFramework.frameTime
         else:
@@ -244,17 +263,20 @@ class AttackState:
 
     @staticmethod
     def update(object, type):
-        object.frame = (object.frame + object.framesPerActionAttack * object.actionPerTime * gameFramework.frameTime) % object.framesPerActionAttack
+        object.frame = (
+                                   object.frame + object.framesPerActionAttack * object.actionPerTime * gameFramework.frameTime) % object.framesPerActionAttack
         if object.isBleeding:
-            object.bloodFrame = (object.bloodFrame + bloodImageNum * bleedingPerTime * gameFramework.frameTime) % bloodImageNum
+            object.bloodFrame = (
+                                            object.bloodFrame + bloodImageNum * bleedingPerTime * gameFramework.frameTime) % bloodImageNum
             if int(object.bloodFrame) % bloodImageNum == 5:
                 object.isBleeding = False
                 object.bloodFrame = 0.0
-                #when bleeding animation has been terminated.
+                # when bleeding animation has been terminated.
 
         if type == 'ally':
             if int(object.frame) % object.framesPerActionAttack == 4:
                 if not object.isOnceAttack:
+                    meleeSound.play()
                     object.isOnceAttack = True
                     object.isBleeding = True
                     if not object.isBaseAttack:
@@ -262,6 +284,7 @@ class AttackState:
                         if worldObjManager.enemyCharacterList[0].hp <= 0:
                             object.state = WalkState
                             worldObjManager.enemyCharacterList[0].state = DeathState
+                            orcDownSound.play()
                             # 상대캐릭터가 죽으면 나는 WALK상태가되고 상대는 DIE상태가된다.
                     else:
                         worldObjManager.baseList[1].calcHp(object.offensePower)
@@ -271,6 +294,7 @@ class AttackState:
         else:
             if int(object.frame) % object.framesPerActionAttack == 4:
                 if not object.isOnceAttack:
+                    meleeSound.play()
                     object.isOnceAttack = True
                     object.isBleeding = True
                     if not object.isBaseAttack:
@@ -278,6 +302,7 @@ class AttackState:
                         if worldObjManager.allyCharacterList[0].hp <= 0:
                             object.state = WalkState
                             worldObjManager.allyCharacterList[0].state = DeathState
+                            manDownSound.play()
                         # 상대캐릭터가 죽으면 나는 WALK상태가되고 상대는 DIE상태가된다.
                     else:
                         worldObjManager.baseList[0].calcHp(object.offensePower)
@@ -296,8 +321,9 @@ class AttackState:
                 object.size,
                 object.size)
             if object.isBleeding:
-                bloodImage.clip_draw_to_origin(int(object.bloodFrame) % bloodImageNum * 512, 0, 512, 512, object.x + 50 -
-                                               camera.cameraXCoord, object.y-30, 60, 60)
+                bloodImage.clip_draw_to_origin(int(object.bloodFrame) % bloodImageNum * 512, 0, 512, 512,
+                                               object.x + 50 -
+                                               camera.cameraXCoord, object.y - 30, 60, 60)
         else:
             object.hpBarImage.draw(object.x + enemyhpBarPos - camera.cameraXCoord, object.y + object.size / 2,
                                    object.hp / 2, enemyhpBarHeigt)
@@ -307,8 +333,9 @@ class AttackState:
                                                                                                                object.size,
                                                                                                                object.size)
             if object.isBleeding:
-                bloodImage.clip_draw_to_origin(int(object.bloodFrame) % bloodImageNum * 512, 0, 512, 512, object.x - 100 -
-                                               camera.cameraXCoord, object.y-30, 60, 60)
+                bloodImage.clip_draw_to_origin(int(object.bloodFrame) % bloodImageNum * 512, 0, 512, 512,
+                                               object.x - 100 -
+                                               camera.cameraXCoord, object.y - 30, 60, 60)
 
     @staticmethod
     def exit(object):
@@ -322,7 +349,8 @@ class DeathState:
 
     @staticmethod
     def update(object, type):
-        object.frame = (object.frame + object.framesPerActionDeath * object.actionPerTime * gameFramework.frameTime) % object.framesPerActionDeath
+        object.frame = (
+                                   object.frame + object.framesPerActionDeath * object.actionPerTime * gameFramework.frameTime) % object.framesPerActionDeath
         if type == 'ally':
             if object.frame >= float(object.framesPerActionDeath) - 0.2:
                 if len(worldObjManager.allyDeathList) > 0:

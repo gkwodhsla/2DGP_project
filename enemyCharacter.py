@@ -26,7 +26,7 @@ class HammerOrk(CharacterABC):
         self.left = self.x - self.size / 2
         self.top = self.y + self.size / 2
         self.bottom = self.y - self.size / 2
-        if self.hpBarImage == None:
+        if self.hpBarImage is None:
             self.hpBarImage = load_image("effectImages\\enemyHpBar.png")
 
     def draw(self):
@@ -66,6 +66,7 @@ class HammerOrk(CharacterABC):
 
     def changeState(self):
         pass
+
 
 class SwordOrk(CharacterABC):
     state = WalkState
@@ -131,6 +132,7 @@ class SwordOrk(CharacterABC):
 
     def changeState(self):
         pass
+
 
 class AxeOrk(CharacterABC):
     state = WalkState

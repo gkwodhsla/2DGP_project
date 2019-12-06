@@ -17,6 +17,8 @@ class Cannon:
     gravitationalAccelerationMps = -9.8
     gravitationalAccelerationPps = (gravitationalAccelerationMps * pixelPerMeter)
 
+    explosionSound = None
+
     def __init__(self):
         self.size = 60
         self.x = 0.0
@@ -38,10 +40,13 @@ class Cannon:
         self.xVelocity = self.initVelocity * math.cos(math.radians(self.launchAngle))
         self.yVelocity = self.initVelocity * math.sin(math.radians(self.launchAngle))
 
-        if self.cannonBallImage == None:
+        if self.cannonBallImage is None:
             self.cannonBallImage = camera.load_image("effectImages\\cannonBall.png")
-        if self.cannonExplosionImage == None:
+        if self.cannonExplosionImage is None:
             self.cannonExplosionImage = camera.load_image("effectImages\\explosion.png")
+        if self.explosionSound is None:
+            self.explosionSound=camera.load_wav('sound\\bomb_explosion.wav')
+            self.explosionSound.set_volume(50)
 
     def update(self):
         self.right=self.x+self.size/2
@@ -82,11 +87,13 @@ class Cannon:
 
                 if isCollision:
                     self.isExplosion = True
+                    self.explosionSound.play()
                     worldObjManager.enemyDeathList.append(enemy)
                     worldObjManager.enemyCharacterList.remove(enemy)
                     enemy.state = characterAttrib.DeathState
 
             if (self.y - self.size <= 0):
+                self.explosionSound.play()
                 self.isExplosion = True
 
 

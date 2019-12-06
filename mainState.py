@@ -28,7 +28,8 @@ def enter():
     global font
     global oldScroll
     camera.enter()
-
+    tempCannon=cannon.Cannon()
+    del(tempCannon)
     # fourth type is base type True: ally
     allyBase = base("base\\allyBase.png", 200, 150, True)
     enemyBase = base("base\\enemyBase.png", camera.backgroundImage.w - 200, 150, False)
