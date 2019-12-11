@@ -130,7 +130,7 @@ def delAllImage():
         del (orkAttackImageList[0])
         del (orkDieImageList[0])
         del (orkIdleImageList[0])
-   
+
 
     del bloodImage
 
