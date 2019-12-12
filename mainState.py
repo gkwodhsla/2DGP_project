@@ -6,6 +6,7 @@ import worldObjManager
 import allyCharacter
 import enemyCharacter
 import gameFramework
+import titleState
 
 import cannon
 import GUI
@@ -27,6 +28,7 @@ def enter():
     global coin, spearRespawnButton, axeRespawnButton, swordRespawnButton
     global font
     global oldScroll
+    worldObjManager.deleteAllObjects()
     camera.enter()
     tempCannon=cannon.Cannon()
     del(tempCannon)
@@ -45,7 +47,12 @@ def enter():
 
 
 def exit():
-    worldObjManager.deleteAllObjects()
+    global allyBase
+    global enemyBase
+    global coin
+    allyBase.hp=500
+    enemyBase.hp=500
+    coin.currentMoney=0
 
 
 def pause():
@@ -68,7 +75,9 @@ def handle_events():
         elif event.type == SDL_MOUSEMOTION:
             camera.handleEvent(event.x)
         elif event.type == SDL_KEYDOWN:
-            if event.key == SDLK_SPACE:
+            if event.key == SDLK_ESCAPE:
+                gameFramework.change_state(titleState)
+            elif event.key == SDLK_SPACE:
                 if curCannonPrepareTime <= 0.0:
                     for i in range(4):
                         worldObjManager.addObject(cannon.Cannon(), 3)

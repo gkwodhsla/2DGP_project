@@ -79,6 +79,9 @@ def handle_events():
                 startButtonState = ButtonUP
             if quitButtonXpos <= mouseX <= quitButtonXpos + 300 and quitButtonYpos <= mouseY <= quitButtonYpos + 150:
                 gameFramework.running = False
+                characterAttrib.delAllImage()
+                camera.exit()
+
             else:
                 quitButtonState = ButtonUP
 

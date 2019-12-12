@@ -110,8 +110,14 @@ def drawObject():
 
 # delete all objects when game is over.
 def deleteAllObjects():
-    for obj in allyCharacterList:
-        del obj
+    baseList.clear()
+    allyCharacterList.clear()
+    enemyCharacterList.clear()
+    allyDeathList.clear()
+    enemyDeathList.clear()
+    cannonList.clear()
+    #for obj in allyCharacterList:
+     #   del obj
 
-    for obj in enemyCharacterList:
-        del obj
+    #for obj in enemyCharacterList:
+     #   del obj

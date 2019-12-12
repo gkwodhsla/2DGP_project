@@ -2,7 +2,7 @@ from pico2d import *
 import gameFramework
 import camera
 import characterAttrib
-
+import titleState
 
 victoryImage = None
 defeatImage = None
@@ -13,6 +13,8 @@ defeatSound = None
 
 
 def enter():
+    global showTime
+    showTime = 0.0
     camera.backgroundMusic.stop()
     global victoryImage, defeatImage, victorySound, defeatSound
     victoryImage = load_image('effectImages\\victory.png')
@@ -31,8 +33,6 @@ def exit():
     global victoryImage, defeatImage
     del victoryImage
     del defeatImage
-    characterAttrib.delAllImage()
-    camera.exit()
 
 
 def pause():
@@ -51,7 +51,7 @@ def update():
     global showTime
     showTime += gameFramework.frameTime
     if showTime >= 4.0:
-        gameFramework.running = False
+        gameFramework.change_state(titleState)
 
 
 def draw():
